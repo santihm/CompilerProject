@@ -7,9 +7,10 @@ import java_cup.runtime.Symbol;
 %cup
 
 %state COMMENT
+%state COMMENT_SINGLE
 
 %{
-// Helper methods and variable declarations
+// Helper methods to build symbols
 private Symbol symbol(int type) {
     return new Symbol(type, yyline, yycolumn);
 }
@@ -19,49 +20,49 @@ private Symbol symbol(int type, Object value) {
 }
 %}
 
-// Regular expressions
+/* Regular Expressions */
 
-// Define patterns for common elements
+// Whitespace, digits, letters, and common patterns
 Whitespace = [ \t\f\r\n]+
 Digit = [0-9]
 Letter = [a-zA-Z_]
 Identifier = {Letter}({Letter}|{Digit})*
 IntegerLiteral = {Digit}+
-DoubleLiteral = {Digit}+("."{Digit}+)? // Double numbers
-StringLiteral = "\"" ([^\"\r\n])* "\""
-CharLiteral = '\''[^'\r\n]*'\'
+DoubleLiteral = {Digit}+("."{Digit}+)?
+StringLiteral = "\"" ([^\"\\\r\n]|\\[btnrf\"\\])* "\""
+CharLiteral = '\'' ([^\'\\\r\n]|\\[btnrf\'\\]) '\'
 
-// Define patterns for tokens
+// Tokens and reserved keywords
 
 %%
 
 <YYINITIAL> {
 
-  // Whitespace: ignore
-  {Whitespace}             { /* skip whitespace */ }
+  // Ignore whitespaces
+  {Whitespace}             { /* Ignore whitespace */ }
 
-  // Keywords
-  "program"               { return symbol(sym.PROGRAM); }
-  "begin"                 { return symbol(sym.BEGIN); }
-  "end"                   { return symbol(sym.END); }
-  "int"                   { return symbol(sym.INT); }
-  "bool"                  { return symbol(sym.BOOL); }
-  "double"                { return symbol(sym.DOUBLE); }
-  "string"                { return symbol(sym.STRING); }
-  "char"                  { return symbol(sym.CHAR); }
-  "def"                   { return symbol(sym.DEF); }
-  "return"                { return symbol(sym.RETURN); }
-  "true"                  { return symbol(sym.TRUE); }
-  "false"                 { return symbol(sym.FALSE); }
-  "if"                    { return symbol(sym.IF); }
-  "then"                  { return symbol(sym.THEN); }
-  "while"                 { return symbol(sym.WHILE); }
-  "do"                    { return symbol(sym.DO); }
-  "else"                  { return symbol(sym.ELSE); }
-  "not"                   { return symbol(sym.NOT); }
-  "and"                   { return symbol(sym.AND); }
-  "or"                    { return symbol(sym.OR); }
-  "ref"                   { return symbol(sym.REF); }
+  // Reserved keywords
+  "program"                { return symbol(sym.PROGRAM); }
+  "begin"                  { return symbol(sym.BEGIN); }
+  "end"                    { return symbol(sym.END); }
+  "int"                    { return symbol(sym.INT); }
+  "bool"                   { return symbol(sym.BOOL); }
+  "double"                 { return symbol(sym.DOUBLE); }
+  "string"                 { return symbol(sym.STRING); }
+  "char"                   { return symbol(sym.CHAR); }
+  "def"                    { return symbol(sym.DEF); }
+  "return"                 { return symbol(sym.RETURN); }
+  "true"                   { return symbol(sym.TRUE); }
+  "false"                  { return symbol(sym.FALSE); }
+  "if"                     { return symbol(sym.IF); }
+  "then"                   { return symbol(sym.THEN); }
+  "while"                  { return symbol(sym.WHILE); }
+  "do"                     { return symbol(sym.DO); }
+  "else"                   { return symbol(sym.ELSE); }
+  "not"                    { return symbol(sym.NOT); }
+  "and"                    { return symbol(sym.AND); }
+  "or"                     { return symbol(sym.OR); }
+  "ref"                    { return symbol(sym.REF); }
 
   // Identifiers
   {Identifier}             { return symbol(sym.ID, yytext()); }
@@ -97,21 +98,27 @@ CharLiteral = '\''[^'\r\n]*'\'
   "<<"                     { return symbol(sym.IN); }
   ">>"                     { return symbol(sym.OUT); }
   "!>>"                    { return symbol(sym.OUTNL); }
+  "|"                      { return symbol(sym.PIPE); } // Added PIPE definition
 
   // Single-line comments
-  "//"                     { /* ignore single-line comments */ }
+  "//"                     { yybegin(COMMENT_SINGLE); } // Switch to COMMENT_SINGLE state
 
   // Multi-line comments
   "/*"                     { yybegin(COMMENT); }
 
-  // Error handling
+  // Error handling and illegal characters
   "\""                     { throw new Error("Unterminated string literal"); }
   [^]                      { return symbol(sym.ERROR, "Illegal character: " + yytext()); }
 }
 
 <COMMENT> {
-  "*/"                     { yybegin(YYINITIAL); } // End of multi-line comment
-  [^\*]                    { /* Skip content inside the comment */ }
+  "*/"                     { yybegin(YYINITIAL); }
+  [^\*]                    { /* Consume content inside the comment */ }
   \*[^/]                   { /* Ignore '*' not followed by '/' */ }
-  <<EOF>>                  { throw new Error("Unclosed comment"); } // Error if EOF is reached before closing
+  <<EOF>>                  { throw new Error("Unclosed comment block"); }
+}
+
+<COMMENT_SINGLE> {
+  [^\n]+                   { /* Consume line of comment */ }
+  \n                       { yybegin(YYINITIAL); } // Return to initial state after a newline
 }

@@ -287,11 +287,11 @@ Program ::= PROGRAM Decls BEGIN VarDecls Statements END;
 // Declarations (variables and function definitions)
 Decls ::= VarDecl Decls
        | DefDecl Decls
-       | empty;
+       | ;
 
 // Variable declarations
 VarDecls ::= VarDecls VarDecl
-          | empty;
+          | ;
 
 // Individual variable declaration
 VarDecl ::= VarsOptInit COLON TypeOrConstant SEMI;
@@ -342,14 +342,14 @@ PVar ::= ID
 
 // Optional type (can be empty)
 OptType ::= COLON Type
-         | empty;
+         | ;
 
 // Function body
 Body ::= LBRAC VarDecls Statements RBRAC;
 
 // Statements block
 Statements ::= Stat Statements
-            | empty;
+            | ;
 
 // Individual statement
 Stat ::= Vars IN SEMI
@@ -381,7 +381,7 @@ Expr ::= Term ExprTail;
 ExprTail ::= ArithOp Term ExprTail
           | RelOp Term ExprTail
           | BoolOp Term ExprTail
-          | empty;
+          | ;
 
 // Terms (with multiplication/division operations)
 Term ::= Factor TermTail;
@@ -389,7 +389,7 @@ Term ::= Factor TermTail;
 // Term tail (multiplication or division)
 TermTail ::= TIMES Factor TermTail
           | DIV Factor TermTail
-          | empty;
+          | ;
 
 // Factors (parentheses, negation, constants, variables, or function calls)
 Factor ::= LPAR Expr RPAR
