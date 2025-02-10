@@ -261,10 +261,25 @@ terminal PROGRAM, BEGIN, END, COLON, SEMI, PIPE, ASSIGNDECL, ASSIGN, TRUE, FALSE
         AND, OR, GT, GE, LT, LE, EQ, NE, PLUS, TIMES, DIV, ID, BOOL, INT, DOUBLE, STRING, CHAR,
         REF, IN, OUT, OUTNL;
 
+
 // Declare non-terminal symbols
 non terminal Program, Decls, VarDecls, VarDecl, VarsOptInit, TypeOrConstant, Type, Constant,
               DefDecl, ParDecls, ParDecl, PVars, PVar, OptType, Body, Statements, Stat,
               Vars, Exprs, FunCall, Expr, ExprTail, Term, TermTail, Factor, ArithOp, BoolOp, RelOp, empty;
+
+// Agregar las declaraciones de precedencia
+// Declaraciones de precedencia y asociatividad
+precedence left OR;        // Operador "or" (menor precedencia, izquierda)
+precedence left AND;       // Operador "and" (precendencia mayor que "or", asociatividad izquierda)
+precedence right NOT;      // Operador "not" (asociatividad derecha, mayor que "and" y "or")
+
+precedence left EQ, NE, LT, LE, GT, GE; // Operadores relacionales "==", "<>", "<", "<=", ">", ">="
+
+precedence left PLUS, MINUS;    // "+" y "-" tienen menor precedencia que "*", "/", izquierda
+precedence left TIMES, DIV;    // "*" y "/" (mayor precedencia que "+" y "-", asociatividad izquierda)
+
+precedence nonassoc LPAR, RPAR;   // Paréntesis tienen la mayor precedencia y no asociatividad
+
 
 // Start rule for the program
 Program ::= PROGRAM Decls BEGIN VarDecls Statements END;

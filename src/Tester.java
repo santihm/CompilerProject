@@ -1,123 +1,58 @@
-/*import java.io.*;
-import mulet_es5tsc.parser;
-import mulet_es5tsc.sym;
 import java.io.*;
-import java.util.Scanner;
+
+import mulet_es5tsc.parser;
 
 public class Tester {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Toy3 Tester - Choose mode:");
-        System.out.println("1 - Interactive Mode");
-        System.out.println("2 - Run Test Files");
-        System.out.print("Option: ");
-
-        int choice = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer
-
-        if (choice == 1) {
-            runInteractiveMode(scanner);
-        } else if (choice == 2) {
-            System.out.print("Enter test number (1-4): ");
-            int testNumber = scanner.nextInt();
-            scanner.nextLine(); // Limpiar buffer
-
-            if (testNumber >= 1 && testNumber <= 4) {
-                runTest(testNumber);
-            } else {
-                System.out.println("Invalid test number.");
-            }
-        } else {
-            System.out.println("Invalid option.");
+        if (args.length != 1) {
+            System.err.println("Usage: java Tester <input_file.txt>");
+            System.exit(1);
         }
 
-        scanner.close();
-    }
+        String inputFilePath = args[0];
 
-    private static void runInteractiveMode(Scanner scanner) {
-        System.out.println("Interactive Mode - Type your code (type 'exit' to quit):");
-
-        while (true) {
-            System.out.print("> ");
-            String input = scanner.nextLine();
-
-            if (input.equalsIgnoreCase("exit")) {
-                break;
-            }
-
-            try {
-                runLexerAndParser(new StringReader(input));
-            } catch (Exception e) {
-                System.err.println("Error: " + e.getMessage());
-            }
+        // Validar que el archivo tiene extensión .txt
+        if (!inputFilePath.endsWith(".txt")) {
+            System.err.println("Error: The input file must have a .txt extension.");
+            System.exit(1);
         }
-    }
 
-    private static void runTest(int testNumber) {
-        String testPath = "../mulet_es5tsc/test/valid" + testNumber + "/valid" + testNumber;
-        File inputFile = new File(testPath + "_in.txt");
-        File expectedOutputFile = new File(testPath + "_out.txt");
-
-        if (!inputFile.exists() || !expectedOutputFile.exists()) {
-            System.err.println("Missing test files for test " + testNumber);
-            return;
+        File inputFile = new File(inputFilePath);
+        if (!inputFile.exists()) {
+            System.err.println("Error: Input file does not exist.");
+            System.exit(1);
         }
+
+        // Obtener solo el nombre del archivo sin la ruta
+        String fileName = inputFile.getName().replace(".txt", ".c");
+
+        // Definir la ruta de salida en test_files/c_out/
+        File outputDir = new File("test_files/c_out");
+        if (!outputDir.exists()) {
+            outputDir.mkdirs(); // Crear el directorio si no existe
+        }
+
+        File outputFile = new File(outputDir, fileName);
 
         try {
-            // Leer archivo de entrada
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFile));
-            StringBuilder input = new StringBuilder();
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                input.append(line).append("\n");
-            }
-            bufferedReader.close();
+            FileReader fileReader = new FileReader(inputFile);
+            PrintStream originalOut = System.out; // Guardar la salida estándar
+            PrintStream fileOut = new PrintStream(new FileOutputStream(outputFile));
 
-            // Leer archivo de salida esperada
-            BufferedReader expectedReader = new BufferedReader(new FileReader(expectedOutputFile));
-            StringBuilder expectedOutput = new StringBuilder();
-            while ((line = expectedReader.readLine()) != null) {
-                expectedOutput.append(line).append("\n");
-            }
-            expectedReader.close();
+            System.setOut(fileOut); // Redirigir salida estándar al archivo
 
-            // Ejecutar el lexer y parser
-            StringReader stringReader = new StringReader(input.toString());
-            StringWriter outputWriter = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(outputWriter);
+            Lexer lexer = new Lexer(fileReader);
+            parser p = new parser(lexer); // Parser de CUP generado
 
-            try {
-                runLexerAndParser(stringReader);
-                printWriter.println("Parsing successful!");
-            } catch (Exception e) {
-                printWriter.println("Syntax error: " + e.getMessage());
-            }
+            p.parse(); // Ejecutar el análisis sintáctico
 
-            // Comparar salida con el archivo esperado
-            String result = outputWriter.toString();
-            if (result.equals(expectedOutput.toString())) {
-                System.out.println("[✔] Test " + testNumber + " passed!");
-            } else {
-                System.out.println("[✘] Test " + testNumber + " failed!");
-                System.out.println("Expected:\n" + expectedOutput);
-                System.out.println("Got:\n" + result);
-            }
-        } catch (IOException e) {
-            System.err.println("Error reading file: " + e.getMessage());
+            System.setOut(originalOut); // Restaurar la salida estándar
+            fileReader.close();
+            fileOut.close();
+
+            System.out.println("Parsing completed successfully. Output saved to: " + outputFile.getPath());
         } catch (Exception e) {
-            System.err.println("Test failed: " + e.getMessage());
+            System.err.println("Parsing failed: " + e.getMessage());
         }
     }
-
-    private static void runLexerAndParser(Reader input) throws Exception {
-        Lexer lexer = new Lexer(input);
-        parser p = new parser(lexer); // Cambio aquí: 'parser' en minúscula
-
-        try {
-            p.parse();
-            System.out.println("Parsing successful!");
-        } catch (Exception e) {
-            System.err.println("Syntax error: " + e.getMessage());
-        }
-    }
-}*/
+}

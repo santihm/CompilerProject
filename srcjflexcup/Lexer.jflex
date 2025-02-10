@@ -83,6 +83,7 @@ CharLiteral = '\''[^'\r\n]*'\'
 
   // Operators
   ":="                     { return symbol(sym.ASSIGN); }
+  "="                      { return symbol(sym.ASSIGNDECL); }
   "=="                     { return symbol(sym.EQ); }
   "<>"                     { return symbol(sym.NE); }
   "<"                      { return symbol(sym.LT); }

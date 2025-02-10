@@ -100,14 +100,14 @@ class Lexer implements java_cup.runtime.Scanner {
   private static final String ZZ_ACTION_PACKED_0 =
     "\2\0\1\1\1\2\1\1\1\3\1\1\1\4\1\5"+
     "\1\6\1\7\1\10\1\11\1\12\1\13\1\14\1\15"+
-    "\1\16\1\1\1\17\17\20\1\21\1\22\1\23\3\0"+
-    "\1\24\1\0\1\25\1\26\1\0\1\27\1\30\1\31"+
-    "\1\32\1\33\1\34\1\35\5\20\1\36\3\20\1\37"+
-    "\2\20\1\40\6\20\1\41\1\42\1\43\1\0\1\44"+
-    "\1\45\3\20\1\46\2\20\1\47\1\20\1\50\1\51"+
-    "\1\20\1\52\5\20\1\0\1\20\1\53\1\54\1\20"+
-    "\1\55\4\20\1\56\1\57\1\20\1\60\1\61\1\20"+
-    "\1\62\3\20\1\63\1\64\1\20\1\65\1\66\1\67";
+    "\1\16\1\17\1\20\17\21\1\22\1\23\1\24\3\0"+
+    "\1\25\1\0\1\26\1\27\1\0\1\30\1\31\1\32"+
+    "\1\33\1\34\1\35\1\36\5\21\1\37\3\21\1\40"+
+    "\2\21\1\41\6\21\1\42\1\43\1\44\1\0\1\45"+
+    "\1\46\3\21\1\47\2\21\1\50\1\21\1\51\1\52"+
+    "\1\21\1\53\5\21\1\0\1\21\1\54\1\55\1\21"+
+    "\1\56\4\21\1\57\1\60\1\21\1\61\1\62\1\21"+
+    "\1\63\3\21\1\64\1\65\1\21\1\66\1\67\1\70";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[121];
@@ -729,277 +729,282 @@ private Symbol symbol(int type, Object value) {
             { return symbol(sym.ERROR, "Illegal character: " + yytext());
             }
             // fall through
-          case 56: break;
+          case 57: break;
           case 2:
             { /* skip whitespace */
             }
             // fall through
-          case 57: break;
+          case 58: break;
           case 3:
             { throw new Error("Unterminated string literal");
             }
             // fall through
-          case 58: break;
+          case 59: break;
           case 4:
             { return symbol(sym.LPAR);
             }
             // fall through
-          case 59: break;
+          case 60: break;
           case 5:
             { return symbol(sym.RPAR);
             }
             // fall through
-          case 60: break;
+          case 61: break;
           case 6:
             { return symbol(sym.TIMES);
             }
             // fall through
-          case 61: break;
+          case 62: break;
           case 7:
             { return symbol(sym.PLUS);
             }
             // fall through
-          case 62: break;
+          case 63: break;
           case 8:
             { return symbol(sym.COMMA);
             }
             // fall through
-          case 63: break;
+          case 64: break;
           case 9:
             { return symbol(sym.MINUS);
             }
             // fall through
-          case 64: break;
+          case 65: break;
           case 10:
             { return symbol(sym.DIV);
             }
             // fall through
-          case 65: break;
+          case 66: break;
           case 11:
             { return symbol(sym.INT_CONST, Integer.parseInt(yytext()));
             }
             // fall through
-          case 66: break;
+          case 67: break;
           case 12:
             { return symbol(sym.COLON);
             }
             // fall through
-          case 67: break;
+          case 68: break;
           case 13:
             { return symbol(sym.SEMI);
             }
             // fall through
-          case 68: break;
+          case 69: break;
           case 14:
             { return symbol(sym.LT);
             }
             // fall through
-          case 69: break;
-          case 15:
-            { return symbol(sym.GT);
-            }
-            // fall through
           case 70: break;
-          case 16:
-            { return symbol(sym.ID, yytext());
+          case 15:
+            { return symbol(sym.ASSIGNDECL);
             }
             // fall through
           case 71: break;
-          case 17:
-            { return symbol(sym.LBRAC);
+          case 16:
+            { return symbol(sym.GT);
             }
             // fall through
           case 72: break;
-          case 18:
-            { return symbol(sym.RBRAC);
+          case 17:
+            { return symbol(sym.ID, yytext());
             }
             // fall through
           case 73: break;
-          case 19:
-            { /* Skip content inside the comment */
+          case 18:
+            { return symbol(sym.LBRAC);
             }
             // fall through
           case 74: break;
-          case 20:
-            { return symbol(sym.STRING_CONST, yytext());
+          case 19:
+            { return symbol(sym.RBRAC);
             }
             // fall through
           case 75: break;
-          case 21:
-            { yybegin(COMMENT);
+          case 20:
+            { /* Skip content inside the comment */
             }
             // fall through
           case 76: break;
-          case 22:
-            { /* ignore single-line comments */
+          case 21:
+            { return symbol(sym.STRING_CONST, yytext());
             }
             // fall through
           case 77: break;
-          case 23:
-            { return symbol(sym.ASSIGN);
+          case 22:
+            { yybegin(COMMENT);
             }
             // fall through
           case 78: break;
-          case 24:
-            { return symbol(sym.IN);
+          case 23:
+            { /* ignore single-line comments */
             }
             // fall through
           case 79: break;
-          case 25:
-            { return symbol(sym.LE);
+          case 24:
+            { return symbol(sym.ASSIGN);
             }
             // fall through
           case 80: break;
-          case 26:
-            { return symbol(sym.NE);
+          case 25:
+            { return symbol(sym.IN);
             }
             // fall through
           case 81: break;
-          case 27:
-            { return symbol(sym.EQ);
+          case 26:
+            { return symbol(sym.LE);
             }
             // fall through
           case 82: break;
-          case 28:
-            { return symbol(sym.GE);
+          case 27:
+            { return symbol(sym.NE);
             }
             // fall through
           case 83: break;
-          case 29:
-            { return symbol(sym.OUT);
+          case 28:
+            { return symbol(sym.EQ);
             }
             // fall through
           case 84: break;
-          case 30:
-            { return symbol(sym.DO);
+          case 29:
+            { return symbol(sym.GE);
             }
             // fall through
           case 85: break;
-          case 31:
-            { return symbol(sym.IF);
+          case 30:
+            { return symbol(sym.OUT);
             }
             // fall through
           case 86: break;
-          case 32:
-            { return symbol(sym.OR);
+          case 31:
+            { return symbol(sym.DO);
             }
             // fall through
           case 87: break;
-          case 33:
-            { /* Ignore '*' not followed by '/' */
+          case 32:
+            { return symbol(sym.IF);
             }
             // fall through
           case 88: break;
-          case 34:
-            { yybegin(YYINITIAL);
+          case 33:
+            { return symbol(sym.OR);
             }
             // fall through
           case 89: break;
-          case 35:
-            { return symbol(sym.OUTNL);
+          case 34:
+            { /* Ignore '*' not followed by '/' */
             }
             // fall through
           case 90: break;
-          case 36:
-            { return symbol(sym.DOUBLE_CONST, Double.parseDouble(yytext()));
+          case 35:
+            { yybegin(YYINITIAL);
             }
             // fall through
           case 91: break;
-          case 37:
-            { return symbol(sym.AND);
+          case 36:
+            { return symbol(sym.OUTNL);
             }
             // fall through
           case 92: break;
-          case 38:
-            { return symbol(sym.DEF);
+          case 37:
+            { return symbol(sym.DOUBLE_CONST, Double.parseDouble(yytext()));
             }
             // fall through
           case 93: break;
-          case 39:
-            { return symbol(sym.END);
+          case 38:
+            { return symbol(sym.AND);
             }
             // fall through
           case 94: break;
-          case 40:
-            { return symbol(sym.INT);
+          case 39:
+            { return symbol(sym.DEF);
             }
             // fall through
           case 95: break;
-          case 41:
-            { return symbol(sym.NOT);
+          case 40:
+            { return symbol(sym.END);
             }
             // fall through
           case 96: break;
-          case 42:
-            { return symbol(sym.REF);
+          case 41:
+            { return symbol(sym.INT);
             }
             // fall through
           case 97: break;
-          case 43:
-            { return symbol(sym.BOOL);
+          case 42:
+            { return symbol(sym.NOT);
             }
             // fall through
           case 98: break;
-          case 44:
-            { return symbol(sym.CHAR);
+          case 43:
+            { return symbol(sym.REF);
             }
             // fall through
           case 99: break;
-          case 45:
-            { return symbol(sym.ELSE);
+          case 44:
+            { return symbol(sym.BOOL);
             }
             // fall through
           case 100: break;
-          case 46:
-            { return symbol(sym.THEN);
+          case 45:
+            { return symbol(sym.CHAR);
             }
             // fall through
           case 101: break;
-          case 47:
-            { return symbol(sym.TRUE);
+          case 46:
+            { return symbol(sym.ELSE);
             }
             // fall through
           case 102: break;
-          case 48:
-            { return symbol(sym.CHAR_CONST, yytext());
+          case 47:
+            { return symbol(sym.THEN);
             }
             // fall through
           case 103: break;
-          case 49:
-            { return symbol(sym.BEGIN);
+          case 48:
+            { return symbol(sym.TRUE);
             }
             // fall through
           case 104: break;
-          case 50:
-            { return symbol(sym.FALSE);
+          case 49:
+            { return symbol(sym.CHAR_CONST, yytext());
             }
             // fall through
           case 105: break;
-          case 51:
-            { return symbol(sym.WHILE);
+          case 50:
+            { return symbol(sym.BEGIN);
             }
             // fall through
           case 106: break;
-          case 52:
-            { return symbol(sym.DOUBLE);
+          case 51:
+            { return symbol(sym.FALSE);
             }
             // fall through
           case 107: break;
-          case 53:
-            { return symbol(sym.RETURN);
+          case 52:
+            { return symbol(sym.WHILE);
             }
             // fall through
           case 108: break;
-          case 54:
-            { return symbol(sym.STRING);
+          case 53:
+            { return symbol(sym.DOUBLE);
             }
             // fall through
           case 109: break;
-          case 55:
-            { return symbol(sym.PROGRAM);
+          case 54:
+            { return symbol(sym.RETURN);
             }
             // fall through
           case 110: break;
+          case 55:
+            { return symbol(sym.STRING);
+            }
+            // fall through
+          case 111: break;
+          case 56:
+            { return symbol(sym.PROGRAM);
+            }
+            // fall through
+          case 112: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }

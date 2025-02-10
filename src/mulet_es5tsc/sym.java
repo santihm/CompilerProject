@@ -61,7 +61,7 @@ public interface sym {
   public static final int DO = 26;
   public static final String[] terminalNames = new String[] {
   "EOF",
-  "ERROR",
+  "error",
   "PROGRAM",
   "BEGIN",
   "END",
