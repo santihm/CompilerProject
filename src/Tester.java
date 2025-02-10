@@ -27,7 +27,7 @@ public class Tester {
         String fileName = inputFile.getName().replace(".txt", ".c");
 
         // Definir la ruta de salida en test_files/c_out/
-        File outputDir = new File("test_files/c_out");
+        File outputDir = new File("test_files" + File.separator + "c_out");
         if (!outputDir.exists()) {
             outputDir.mkdirs(); // Crear el directorio si no existe
         }
@@ -56,4 +56,3 @@ public class Tester {
         }
     }
 }
-
