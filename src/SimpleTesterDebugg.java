@@ -1,85 +1,25 @@
 /*
+
 import java.io.*;
 import java_cup.runtime.*;
 import mulet_es5tsc.*;
+import visitor.XMLVisitor;
+import ast.ASTNode;
 
 public class SimpleTesterDebugg {
 
     public static void main(String[] args) {
         try {
-            // Suponemos que el código de entrada está en un String
-            String input = "// Programma esemplificativo in sintassi Toy3\n" +
+            // Código de entrada
+            String input = "program\n" +
                     "\n" +
-                    "program\n" +
-                    "\n" +
-                    "// Dichiarazione variabili globali\n" +
-                    "c: 1;\n" +
-                    "a | b | x : double;\n" +
-                    "taglia | ans1 | ans : string;\n" +
-                    "risultato: double;\n" +
-                    "\n" +
-                    "// Definizione delle funzioni\n" +
-                    "def sommac(a: double; d: double; b: double; ref size: string; ref result: double)\n" +
-                    "{\n" +
-                    "    result := a + b + c + d;\n" +
-                    "\n" +
-                    "    if (result > 100) then {\n" +
-                    "        size := \"grande\";\n" +
-                    "    }\n" +
-                    "    else {\n" +
-                    "        if (result > 50) then {\n" +
-                    "            size := \"media\";\n" +
-                    "        }\n" +
-                    "        else {\n" +
-                    "            size := \"piccola\";\n" +
-                    "        }\n" +
-                    "    }\n" +
-                    "}\n" +
-                    "\n" +
-                    "def stampa(messaggio: string): string\n" +
-                    "{\n" +
-                    "    i: 0;\n" +
-                    "    while (i < 4) do {\n" +
-                    "        \"\" !>>; // Ritorno a capo\n" +
-                    "        i := i + 1;\n" +
-                    "    }\n" +
-                    "    messaggio !>>;\n" +
-                    "    return \"ok\";\n" +
-                    "}\n" +
+                    "x | y = 10 : int;\n" +
                     "\n" +
                     "begin\n" +
-                    "    a := 1;\n" +
-                    "    b := 2.2;\n" +
-                    "    x := 3;\n" +
-                    "    risultato := 0.0;\n" +
-                    "    ans := \"no\";\n" +
-                    "\n" +
-                    "    sommac(a, x, b, taglia, risultato);\n" +
-                    "\n" +
-                    "    stampa(\"La somma di \" + a + \" e \" + b + \" incrementata di \" + c + \" è \" + taglia);\n" +
-                    "    stampa(\"Ed è pari a \" + risultato);\n" +
-                    "\n" +
-                    "    \"Vuoi continuare? (si/no) - inserisci due volte la risposta\\n\">>;\n" +
-                    "    ans <<;\n" +
-                    "    ans1 <<;\n" +
-                    "\n" +
-                    "    while (ans == \"si\") do {\n" +
-                    "        \"Inserisci un intero: \">>;\n" +
-                    "        a <<;\n" +
-                    "        \"Inserisci un reale: \">>;\n" +
-                    "        b <<;\n" +
-                    "\n" +
-                    "        sommac(a, x, b, taglia, risultato);\n" +
-                    "\n" +
-                    "        stampa(\"La somma di \" + a + \" e \" + b + \" incrementata di \" + c + \" è \" + taglia);\n" +
-                    "        stampa(\"Ed è pari a \" + risultato);\n" +
-                    "\n" +
-                    "        \"Vuoi continuare? (si/no): \">>;\n" +
-                    "        ans <<;\n" +
-                    "    }\n" +
-                    "\n" +
-                    "    \"\" !>>; // Ritorno a capo finale\n" +
-                    "    \"Ciao\" !>>;\n" +
+                    "x | y << ;\n" +
+                    "if (x > y) then {\n" +
+                    "\"I valori di x e y sono:\", x, \" \", y !>> ;\n" +
+                    "}\n" +
                     "end";
 
             // Crear el lexer
@@ -100,7 +40,29 @@ public class SimpleTesterDebugg {
 
             // Debug del Parser
             System.out.println("\nParsing:");
-            parser.debug_parse();
+            Symbol sym = parser.debug_parse();
+            ASTNode ast = (ASTNode) sym.value;
+
+
+
+            // Comprobar si el AST es válido
+            if (ast == null) {
+                System.err.println("Error: AST is null. Check your parser.");
+                return;
+            }
+
+
+            // Crear un escritor para imprimir el XML en pantalla
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter xmlWriter = new PrintWriter(stringWriter);
+
+            // Aplicar el visitante para generar XML
+            XMLVisitor visitor = new XMLVisitor(xmlWriter);
+            ((ASTNode) ast).accept(visitor);
+
+            // Imprimir el XML generado en consola
+            xmlWriter.flush();
+            System.out.println("\nGenerated XML:\n" + stringWriter.toString());
 
         } catch (Exception e) {
             e.printStackTrace();

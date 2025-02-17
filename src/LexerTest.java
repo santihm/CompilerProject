@@ -10,7 +10,17 @@ public class LexerTest {
     public static void main(String[] args) {
         try {
             // Crear el lexer con un ejemplo de entrada
-            String input = "program myProgram begin int x := 10; end";
+            String input = "program\n" +
+                    "def incrementa(n: int): int{\n" +
+                    "    n := n + 1;\n" +
+                    "    return n;\n" +
+                    "}\n" +
+                    "\n" +
+                    "begin\n" +
+                    "    y : 4;\n" +
+                    "    x : int;\n" +
+                    "    x := map(ADD, incrementa, 1, y, 4);\n" +
+                    "end";
 
             // Usar StringReader para la entrada de texto
             Lexer lexer = new Lexer(new StringReader(input));

@@ -1,0 +1,11 @@
+program
+def incrementa(n: int): int{
+    n := n + 1;
+    return n;
+}
+
+begin
+    y : 4;
+    x : int;
+    x := map(PP, incrementa, 1.0, 2, y, 4);
+end

@@ -1,6 +1,8 @@
 import java.io.*;
-
 import mulet_es5tsc.parser;
+import java_cup.runtime.*;
+import visitor.*;
+import ast.*;
 
 public class Tester {
     public static void main(String[] args) {
@@ -23,11 +25,11 @@ public class Tester {
             System.exit(1);
         }
 
-        // Obtener solo el nombre del archivo sin la ruta
-        String fileName = inputFile.getName().replace(".txt", ".c");
+        // Obtener solo el nombre del archivo sin la ruta y definir salida de AST
+        String fileName = inputFile.getName().replace(".txt", ".xml");
 
-        // Definir la ruta de salida en test_files/c_out/
-        File outputDir = new File("test_files" + File.separator + "c_out");
+        // Definir la ruta de salida en test_files/xml_out/
+        File outputDir = new File("test_files" + File.separator + "xml_out");
         if (!outputDir.exists()) {
             outputDir.mkdirs(); // Crear el directorio si no existe
         }
@@ -35,22 +37,41 @@ public class Tester {
         File outputFile = new File(outputDir, fileName);
 
         try {
+            // Preparar los flujos de entrada y salida
             FileReader fileReader = new FileReader(inputFile);
-            PrintStream originalOut = System.out; // Guardar la salida estándar
-            PrintStream fileOut = new PrintStream(new FileOutputStream(outputFile));
-
-            System.setOut(fileOut); // Redirigir salida estándar al archivo
+            PrintWriter writer = new PrintWriter(new FileWriter(outputFile));
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter consoleWriter = new PrintWriter(stringWriter);
 
             Lexer lexer = new Lexer(fileReader);
-            parser p = new parser(lexer); // Parser de CUP generado
+            parser p = new parser(lexer); // Parser generado por CUP
 
-            p.parse(); // Ejecutar el análisis sintáctico
+            // Ejecutar el análisis sintáctico y generar el AST
+            Symbol sym = p.debug_parse();
+            ASTNode ast = (ASTNode) sym.value;
+            if (ast == null) {
+                System.err.println("Error: AST is null. Check your parser.");
+                System.exit(1);
+            }
 
-            System.setOut(originalOut); // Restaurar la salida estándar
+            // Crear el visitante XMLVisitor
+            XMLVisitor visitor = new XMLVisitor(writer); // Escribe en el archivo
+            XMLVisitor consoleVisitor = new XMLVisitor(consoleWriter); // Para imprimir en consola
+
+            // Procesar el AST y generar el XML
+            ((ASTNode) ast).accept(visitor);  // Escribir en el archivo XML
+            ((ASTNode) ast).accept(consoleVisitor); // Imprimir en consola
+
+            // Asegúrate de que el contenido XML está completo y correcto
+            writer.close();
+            consoleWriter.close();
             fileReader.close();
-            fileOut.close();
 
-            System.out.println("Parsing completed successfully. Output saved to: " + outputFile.getPath());
+            // Imprimir XML en consola
+            System.out.println("Generated XML:\n" + stringWriter.toString());
+
+            // Imprimir ruta de salida
+            System.out.println("Parsing completed successfully. XML AST output saved to: " + outputFile.getPath());
         } catch (Exception e) {
             System.err.println("Parsing failed: " + e.getMessage());
         }

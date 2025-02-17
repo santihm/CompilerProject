@@ -11,12 +11,12 @@ import java_cup.runtime.Symbol;
 
 %{
 // Helper methods to build symbols
-private Symbol symbol(int type) {
-    return new Symbol(type, yyline, yycolumn);
+private Symbol symbol(int identifier) {
+    return new Symbol(identifier, yyline, yycolumn);
 }
 
-private Symbol symbol(int type, Object value) {
-    return new Symbol(type, yyline, yycolumn, value);
+private Symbol symbol(int identifier, Object value) {
+    return new Symbol(identifier, yyline, yycolumn, value);
 }
 %}
 
@@ -63,6 +63,9 @@ CharLiteral = '\'' ([^\'\\\r\n]|\\[btnrf\'\\]) '\'
   "and"                    { return symbol(sym.AND); }
   "or"                     { return symbol(sym.OR); }
   "ref"                    { return symbol(sym.REF); }
+  "ADD"                    { return symbol(sym.ADD); }
+  "MUL"                    { return symbol(sym.MUL); }
+  "map"                    { return symbol(sym.MAP); }
 
   // Identifiers
   {Identifier}             { return symbol(sym.ID, yytext()); }

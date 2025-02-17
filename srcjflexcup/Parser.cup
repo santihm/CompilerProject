@@ -80,7 +80,7 @@
     2. **Changes Made to Grammar for LALR(1)**
 
     - **Elimination of Left Recursion**: The primary modification was to eliminate the left recursion in the `Expr` production. Left recursion is problematic in parsers like LALR(1) because it leads to shift/reduce conflicts. To fix this, we restructured the `Expr` production using a right-recursive form.
-    - **Operator Precedence**: We introduced explicit precedence rules to resolve ambiguity between different types of operators, such as `+`, `-`, `*`, `/`, `and`, `or`, etc. This ensures that the grammar is unambiguous and suitable for LALR(1) parsing.
+    - **Operator Precedence**: We introduced explicit precedence rules to resolve ambiguity between different identifiers of operators, such as `+`, `-`, `*`, `/`, `and`, `or`, etc. This ensures that the grammar is unambiguous and suitable for LALR(1) parsing.
     - **Expression Reordering**: We clarified the order of operations between `ArithOp`, `RelOp`, and `BoolOp`, ensuring that they are parsed in the correct precedence order.
     - **Elimination of Empty Productions**: We removed unnecessary empty productions (`ε`) or replaced them with more direct alternatives to make the grammar clearer and easier to parse.
 
@@ -238,6 +238,9 @@
            | ID
            | FunCall
            | Constant
+           | Map
+    Map : MAP LPAR ADD COMMA ID COMMA Exprs RPAR
+    Map : MAP LPAR MUL COMMA ID COMMA Exprs RPAR
     ArithOp : PLUS  |  MINUS
     BoolOp : AND | OR
     RelOp :  GT | GE | LT | LE | EQ | NE
@@ -253,19 +256,24 @@
 // The grammar is designed to be parsed with an LALR(1) parser.
 
 import java_cup.runtime.*;
+import ast.*;
+import java.util.List;
+import java.util.ArrayList;
+
 
 // Declare the terminal symbols
 terminal PROGRAM, BEGIN, END, COLON, SEMI, PIPE, ASSIGNDECL, ASSIGN, TRUE, FALSE,
         INT_CONST, DOUBLE_CONST, CHAR_CONST, STRING_CONST, DEF, LPAR, RPAR,
         COMMA, LBRAC, RBRAC, IF, THEN, ELSE, WHILE, DO, RETURN, MINUS, NOT,
         AND, OR, GT, GE, LT, LE, EQ, NE, PLUS, TIMES, DIV, ID, BOOL, INT, DOUBLE, STRING, CHAR,
-        REF, IN, OUT, OUTNL;
+        REF, IN, OUT, OUTNL, ADD, MUL, MAP;
 
 
 // Declare non-terminal symbols
-non terminal Program, Decls, VarDecls, VarDecl, VarsOptInit, TypeOrConstant, Type, Constant,
+non terminal Program, Decls, VarDecls, VarDecl, VarOptInit, TypeOrConstant, Type, Constant,
               DefDecl, ParDecls, ParDecl, PVars, PVar, OptType, Body, Statements, Stat,
-              Vars, Exprs, FunCall, Expr, ExprTail, Term, TermTail, Factor, ArithOp, BoolOp, RelOp, empty;
+              Vars, Exprs, FunCall, Expr, ExprTail, Term, TermTail, Factor, ArithOp, BoolOp, RelOp, empty,
+              Map;
 
 // Agregar las declaraciones de precedencia
 // Declaraciones de precedencia y asociatividad
@@ -282,135 +290,250 @@ precedence nonassoc LPAR, RPAR;   // Paréntesis tienen la mayor precedencia y n
 
 
 // Start rule for the program
-Program ::= PROGRAM Decls BEGIN VarDecls Statements END;
+Program ::= PROGRAM Decls:d BEGIN VarDecls:v Statements:s END
+{:
+    // Creando el nodo AST para el programa
+    RESULT = new ProgramOp(new DeclsOp((List<VarDefDeclOp>)d), new BeginEndOp((List<VarDeclOp>)v, (List<StatOp>)s));
+    //System.out.println("En Program");
+:}
+;
 
 // Declarations (variables and function definitions)
-Decls ::= VarDecl Decls
-       | DefDecl Decls
-       | ;
+Decls ::= VarDecl:v Decls:d {:
+                               List<VarDefDeclOp> list = (d == null) ? new ArrayList<>() : new ArrayList<>((List<VarDefDeclOp>)d);
+                               list.add((VarDefDeclOp)v);
+                               RESULT = list;
+                            :}
+       | DefDecl:def Decls:d {:
+                                List<VarDefDeclOp> list = (d == null) ? new ArrayList<>() : new ArrayList<>((List<VarDefDeclOp>)d);
+                                list.add((VarDefDeclOp)def);
+                                RESULT = list;
+                             :}
+
+       | {: RESULT = null; :} ;
 
 // Variable declarations
-VarDecls ::= VarDecls VarDecl
-          | ;
+VarDecls ::= VarDecls:vs VarDecl:v {: RESULT = new VarDeclsOp((List<VarDeclOp>)vs, (VarDeclOp)v); :}
+          | {: RESULT = null; :};
 
 // Individual variable declaration
-VarDecl ::= VarsOptInit COLON TypeOrConstant SEMI;
+VarDecl ::= VarOptInit:v COLON TypeOrConstant:t SEMI {: RESULT = new VarDeclOp((TypeConstant)t, (List<VarOptInitOp>)v); :};
 
 // Optional initialization for variables
-VarsOptInit ::= ID PIPE VarsOptInit
-             | ID ASSIGNDECL Expr PIPE VarsOptInit
-             | ID
-             | ID ASSIGNDECL Expr;
+VarOptInit ::= ID:i PIPE VarOptInit:v
+{:
+    List<VarOptInitOp> list = new ArrayList<>((List<VarOptInitOp>) v);
+    list.add(0, new VarOptInitOp(new Identifier((String) i), null));
+    RESULT = list;
+:}
+| ID:i ASSIGNDECL Expr:e PIPE VarOptInit:v
+{:
+    List<VarOptInitOp> list = new ArrayList<>((List<VarOptInitOp>) v);
+    list.add(0, new VarOptInitOp(new Identifier((String) i), (ExprOp) e));
+    RESULT = list;
+:}
+| ID:i
+{:
+    List<VarOptInitOp> list = new ArrayList<>();
+    list.add(new VarOptInitOp(new Identifier((String) i), null));
+    RESULT = list;
+:}
+| ID:i ASSIGNDECL Expr:e
+{:
+    List<VarOptInitOp> list = new ArrayList<>();
+    list.add(new VarOptInitOp(new Identifier((String) i), (ExprOp) e));
+    RESULT = list;
+:}
+;
+
+
 
 // Type or constant choice
-TypeOrConstant ::= Type
-               | Constant;
+TypeOrConstant ::= Type:t {: RESULT = new Identifier((String)t); :}
+               | Constant:c {: RESULT = new Constant((String)c); :};
 
 // Types (INT, BOOL, DOUBLE, STRING, CHAR)
-Type ::= INT
-      | BOOL
-      | DOUBLE
-      | STRING
-      | CHAR;
+Type ::= INT {: RESULT = new String("int"); :}
+      | BOOL {: RESULT = new String("bool"); :}
+      | DOUBLE {: RESULT = new String("double"); :}
+      | STRING {: RESULT = new String("string"); :}
+      | CHAR {: RESULT = new String("char"); :};
 
 // Constants (TRUE, FALSE, or numeric/literal constants)
-Constant ::= TRUE
-          | FALSE
-          | INT_CONST
-          | DOUBLE_CONST
-          | CHAR_CONST
-          | STRING_CONST;
+Constant ::= TRUE {: RESULT = new String("true"); :}
+          | FALSE {: RESULT = new String("false"); :}
+          | INT_CONST {: RESULT = new String("int_const"); :}
+          | DOUBLE_CONST {: RESULT = new String("double_const"); :}
+          | CHAR_CONST {: RESULT = new String("char_const"); :}
+          | STRING_CONST {: RESULT = new String("string_const"); :};
 
 // Function declaration
-DefDecl ::= DEF ID LPAR ParDecls RPAR OptType Body
-         | DEF ID LPAR RPAR OptType Body;
+DefDecl ::= DEF ID:i LPAR ParDecls:p RPAR OptType:o Body:b
+            {: RESULT = new DefDeclOp((new Identifier((String)i)), (String)o, (List<ParDeclOp>)p, (BodyOp)b); :}
+         | DEF ID:i LPAR RPAR OptType:o Body:b
+         {: RESULT = new DefDeclOp((new Identifier((String)i)), (String)o, null, (BodyOp)b); :};
 
 // Parameter declarations
-ParDecls ::= ParDecl SEMI ParDecls
-          | ParDecl;
+ParDecls ::= ParDecl:p SEMI ParDecls:ps
+{:
+    List<ParDeclOp> list = new ArrayList<>((List<ParDeclOp>) ps);
+    list.add(0, (ParDeclOp) p);
+    RESULT = list;
+:}
+| ParDecl:p
+{:
+    List<ParDeclOp> list = new ArrayList<>();
+    list.add((ParDeclOp) p);
+    RESULT = list;
+:};
+
 
 // Parameter declaration
-ParDecl ::= PVars COLON Type;
+ParDecl ::= PVars:p COLON Type:t {: RESULT = new ParDeclOp((List<PVarOp>)p, (Identifier)t); :};
 
 // List of parameter variables
-PVars ::= PVar COMMA PVars
-       | PVar;
+PVars ::= PVar:p COMMA PVars:ps
+{:
+    List<PVarOp> list = new ArrayList<>((List<PVarOp>) ps);
+    list.add(0, (PVarOp) p);
+    RESULT = list;
+:}
+| PVar:p
+{:
+    List<PVarOp> list = new ArrayList<>();
+    list.add((PVarOp) p);
+    RESULT = list;
+:};
+
 
 // Individual parameter variable (ID or reference)
-PVar ::= ID
-      | REF ID; // 'REF' is declared here as a terminal
+PVar ::= ID:i {: RESULT = new PVarOp((new Identifier((String)i)), null); :}
+      | REF ID:i {: RESULT = new PVarOp((new Identifier((String)i)), null); :}; //**To fix - Still not know how to solve references to another node
 
-// Optional type (can be empty)
-OptType ::= COLON Type
-         | ;
+// Optional identifier (can be empty)
+OptType ::= COLON Type:t {: RESULT = new String((String)t); :}
+         | {: RESULT = null; :};
 
 // Function body
-Body ::= LBRAC VarDecls Statements RBRAC;
+Body ::= LBRAC VarDecls:v Statements:s RBRAC {: RESULT = new BodyOp((List<VarDeclOp>)v, (List<StatOp>)s); :};
 
 // Statements block
-Statements ::= Stat Statements
-            | ;
+Statements ::= Stat:s Statements:ss
+            {:
+                List<StatOp> list = (ss == null) ? new ArrayList<>() : new ArrayList<>((List<StatOp>) ss);
+                list.add(0, (StatOp) s);
+                RESULT = list;
+            :}
+            | {: RESULT = null; :} ;
 
 // Individual statement
-Stat ::= Vars IN SEMI
-      | Exprs OUT SEMI
-      | Exprs OUTNL SEMI
-      | Vars ASSIGN Exprs SEMI
-      | FunCall SEMI
-      | IF LPAR Expr RPAR THEN Body ELSE Body
-      | IF LPAR Expr RPAR THEN Body
-      | WHILE LPAR Expr RPAR DO Body
-      | RETURN Expr SEMI;
+Stat ::= Vars:v IN SEMI {: RESULT = new ReadOp((List<Identifier>)v); :}
+      | Exprs:e OUT SEMI  {: RESULT = new WriteOp((List<ExprOp>)e, false); :}
+      | Exprs:e OUTNL SEMI {: RESULT = new WriteOp((List<ExprOp>)e, true); :}
+      | Vars:v ASSIGN Exprs:e SEMI {: RESULT = new AssignOp((List<Identifier>)v, (List<ExprOp>)e); :}
+      | FunCall:f SEMI {: RESULT = new CallOp((CallOp)f); :}
+      | IF LPAR Expr:e RPAR THEN Body:b1 ELSE Body:b2 {: RESULT = new IfThenElseOp((ExprOp)e, (BodyOp)b1, (BodyOp)b2); :}
+      | IF LPAR Expr:e RPAR THEN Body:b {: RESULT = new IfThenOp((ExprOp)e,(BodyOp)b); :}
+      | WHILE LPAR Expr:e RPAR DO Body:b {: RESULT = new WhileOp((ExprOp)e, (BodyOp)b); :}
+      | RETURN Expr:e SEMI {: RESULT = new ReturnOp((ExprOp)e); :};
 
 // Variables
-Vars ::= ID PIPE Vars
-     | ID;
+Vars ::= ID:i PIPE Vars:v
+{:
+    List<Identifier> list = new ArrayList<>((List<Identifier>) v);
+    list.add(0, new Identifier((String) i));
+    RESULT = list;
+:}
+| ID:i
+{:
+    List<Identifier> list = new ArrayList<>();
+    list.add(new Identifier((String) i));
+    RESULT = list;
+:};
+
 
 // Expressions list
-Exprs ::= Expr COMMA Exprs
-       | Expr;
+Exprs ::= Expr:e COMMA Exprs:es
+{:
+    List<ExprOp> list = new ArrayList<>((List<ExprOp>) es);
+    list.add(0, (ExprOp) e);
+    RESULT = list;
+:}
+| Expr:e
+{:
+    List<ExprOp> list = new ArrayList<>();
+    list.add((ExprOp) e);
+    RESULT = list;
+:};
+
 
 // Function call
-FunCall ::= ID LPAR Exprs RPAR
-         | ID LPAR RPAR;
+FunCall ::= ID:i LPAR Exprs:e RPAR {: RESULT = new CallOp((new Identifier((String)i)), (List<ExprOp>)e); :}
+         | ID:i LPAR RPAR {: RESULT = new CallOp((new Identifier((String)i)), null); :};
 
 // Expression
-Expr ::= Term ExprTail;
+// Expresión completa con términos y operadores
+Expr ::= Term:t ExprTail:e
+         {: RESULT = (e != null) ? new BinaryOp((ExprOp)t, ((ExprTailOp)e).getOperator(), ((ExprTailOp)e).getRight()) : (ExprOp)t; :};
 
-// Expression tail (arithmetic, relational, or boolean operators)
-ExprTail ::= ArithOp Term ExprTail
-          | RelOp Term ExprTail
-          | BoolOp Term ExprTail
-          | ;
+// Cola de la expresión (operadores aritméticos, relacionales o booleanos)
+ExprTail ::= ArithOp:op Term:t ExprTail:e
+             {: RESULT = new ExprTailOp(null, ((String)op), (ExprOp)t); if (e != null) ((ExprTailOp)e).setLeft((ExprOp)RESULT); RESULT = (e != null) ? e : RESULT; :}
+          | RelOp:op Term:t ExprTail:e
+             {: RESULT = new ExprTailOp(null, ((String)op), (ExprOp)t); if (e != null) ((ExprTailOp)e).setLeft((ExprOp)RESULT); RESULT = (e != null) ? e : RESULT; :}
+          | BoolOp:op Term:t ExprTail:e
+             {: RESULT = new ExprTailOp(null, ((String)op), (ExprOp)t); if (e != null) ((ExprTailOp)e).setLeft((ExprOp)RESULT); RESULT = (e != null) ? e : RESULT; :}
+          |
+             {: RESULT = null; :}; // Caso vacío
 
-// Terms (with multiplication/division operations)
-Term ::= Factor TermTail;
+// Un término es un factor con posibles multiplicaciones o divisiones
+Term ::= Factor:f TermTail:t
+         {: RESULT = new TermOp((FactorOp)f, (TermTailOp)t); :};
 
-// Term tail (multiplication or division)
-TermTail ::= TIMES Factor TermTail
-          | DIV Factor TermTail
-          | ;
+// Cola del término (multiplicación o división)
+TermTail ::= TIMES Factor:f TermTail:t
+            {: RESULT = new TermTailOp("*", (FactorOp)f, (TermTailOp)t); :}
+         | DIV Factor:f TermTail:t
+            {: RESULT = new TermTailOp("/", (FactorOp)f, (TermTailOp)t); :}
+         |
+            {: RESULT = new EmptyTermTailOp(); :};  // Caso vacío, no deja null
+
+
 
 // Factors (parentheses, negation, constants, variables, or function calls)
-Factor ::= LPAR Expr RPAR
-        | MINUS Factor
-        | NOT Factor
-        | ID
-        | FunCall
-        | Constant;
+Factor ::= LPAR Expr:e RPAR
+           {: RESULT = new FactorOp(null, (ExprOp)e); :}
+        | MINUS Factor:f
+           {: RESULT = new FactorOp("-", (ExprOp)f); :}
+        | NOT Factor:f
+           {: RESULT = new FactorOp("not", (ExprOp)f); :}
+        | ID:i
+           {: RESULT = new FactorOp(new Identifier((String)i)); :}
+        | FunCall:f
+           {: RESULT = new FactorOp((CallOp)f); :}
+        | Constant:c
+           {: RESULT = new FactorOp(new Constant((String)c)); :};
+
+//        | Map;
+
+//Map : MAP LPAR ADD COMMA ID COMMA Exprs RPAR
+//Map : MAP LPAR MUL COMMA ID COMMA Exprs RPAR
+
+//Map ::= MAP LPAR ADD COMMA ID COMMA Exprs RPAR
+//        | MAP LPAR MUL COMMA ID COMMA Exprs RPAR;
 
 // Arithmetic operations (plus, minus)
-ArithOp ::= PLUS
-         | MINUS;
+ArithOp ::= PLUS {: RESULT = "+"; :}
+         | MINUS {: RESULT = "-"; :};
 
 // Boolean operations (and, or)
-BoolOp ::= AND
-        | OR;
+BoolOp ::= AND {: RESULT = "&&"; :}
+        | OR {: RESULT = "||"; :};
 
 // Relational operations (greater than, less than, etc.)
-RelOp ::= GT
-       | GE
-       | LT
-       | LE
-       | EQ
-       | NE;
+RelOp ::= GT {: RESULT = ">"; :}
+       | GE {: RESULT = ">="; :}
+       | LT {: RESULT = "<"; :}
+       | LE {: RESULT = "<="; :}
+       | EQ {: RESULT = "=="; :}
+       | NE {: RESULT = "<>"; :};

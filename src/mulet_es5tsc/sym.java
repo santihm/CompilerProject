@@ -9,6 +9,7 @@ package mulet_es5tsc;
 public interface sym {
   /* terminals */
   public static final int CHAR_CONST = 14;
+  public static final int MAP = 53;
   public static final int ASSIGNDECL = 8;
   public static final int CHAR = 46;
   public static final int GE = 33;
@@ -42,7 +43,9 @@ public interface sym {
   public static final int TRUE = 10;
   public static final int ERROR = 1;
   public static final int PROGRAM = 2;
+  public static final int MUL = 52;
   public static final int PIPE = 7;
+  public static final int ADD = 51;
   public static final int EQ = 36;
   public static final int TIMES = 39;
   public static final int COLON = 5;
@@ -110,7 +113,10 @@ public interface sym {
   "REF",
   "IN",
   "OUT",
-  "OUTNL"
+  "OUTNL",
+  "ADD",
+  "MUL",
+  "MAP"
   };
 }
 
