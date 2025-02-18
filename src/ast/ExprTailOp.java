@@ -2,7 +2,7 @@ package ast;
 
 import visitor.ASTVisitor;
 
-public class ExprTailOp extends ASTNode {
+public class ExprTailOp extends ExprOp {
     private ExprOp left;  // Nueva variable para la izquierda
     private String operator;
     private ExprOp right;

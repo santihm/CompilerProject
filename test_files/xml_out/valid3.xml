@@ -1,0 +1,229 @@
+<ProgramOp>
+    <DeclsOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: n
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: m
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: k
+            </VarOptInitOp>
+            int
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: message
+            </VarOptInitOp>
+            string_const: "level 0"
+        </VarDeclOp>
+        <DefDeclOp>
+            identifier: glob
+            int
+            <BodyOp>
+                <ReturnOp>
+                    int_const: 100
+                </ReturnOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: scoping
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: n
+                </PVarOp>
+                int
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: m
+                </PVarOp>
+                int
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: message
+                </PVarOp>
+                string
+            </ParDeclOp>
+            <BodyOp>
+                <AssignOp>
+                    identifier: message
+                    string_const: "level 1"
+                </AssignOp>
+                <IfThenElseOp>
+                    <LEOp>
+                        identifier: n
+                        int_const: 1
+                    </LEOp>
+                    <BodyOp>
+                        <AssignOp>
+                            identifier: message
+                            string_const: "level 2.1"
+                        </AssignOp>
+                        <IfThenElseOp>
+                            <LEOp>
+                                identifier: m
+                                int_const: 1
+                            </LEOp>
+                            <BodyOp>
+                                <AssignOp>
+                                    identifier: message
+                                    string_const: "level 3.1"
+                                </AssignOp>
+                                <WriteOp>
+                                    identifier: message
+                                </WriteOp>
+                            </BodyOp>
+                            <BodyOp>
+                                <IfThenElseOp>
+                                    <AndOp>
+                                        <GTOp>
+                                            identifier: m
+                                            int_const: 1
+                                        </GTOp>
+                                        <LTOp>
+                                            identifier: m
+                                            int_const: 5
+                                        </LTOp>
+                                    </AndOp>
+                                    <BodyOp>
+                                        <AssignOp>
+                                            identifier: message
+                                            string_const: "level 3.2"
+                                        </AssignOp>
+                                        <WriteOp>
+                                            identifier: message
+                                        </WriteOp>
+                                    </BodyOp>
+                                    <BodyOp>
+                                        <AssignOp>
+                                            identifier: message
+                                            string_const: "level 3.3"
+                                        </AssignOp>
+                                        <WriteOp>
+                                            identifier: message
+                                        </WriteOp>
+                                    </BodyOp>
+                                </IfThenElseOp>
+                            </BodyOp>
+                        </IfThenElseOp>
+                        <WriteOp>
+                            identifier: message
+                        </WriteOp>
+                    </BodyOp>
+                    <BodyOp>
+                        <AssignOp>
+                            identifier: message
+                            string_const: "level 2.2"
+                        </AssignOp>
+                        <IfThenElseOp>
+                            <LEOp>
+                                identifier: m
+                                int_const: 1
+                            </LEOp>
+                            <BodyOp>
+                                <AssignOp>
+                                    identifier: message
+                                    string_const: "level 3.4"
+                                </AssignOp>
+                                <WriteOp>
+                                    identifier: message
+                                </WriteOp>
+                            </BodyOp>
+                            <BodyOp>
+                                <IfThenElseOp>
+                                    <AndOp>
+                                        <GTOp>
+                                            identifier: m
+                                            int_const: 1
+                                        </GTOp>
+                                        <LTOp>
+                                            identifier: m
+                                            int_const: 5
+                                        </LTOp>
+                                    </AndOp>
+                                    <BodyOp>
+                                        <AssignOp>
+                                            identifier: message
+                                            string_const: "level 3.5"
+                                        </AssignOp>
+                                        <WriteOp>
+                                            identifier: message
+                                        </WriteOp>
+                                    </BodyOp>
+                                    <BodyOp>
+                                        <AssignOp>
+                                            identifier: message
+                                            string_const: "level 3.6"
+                                        </AssignOp>
+                                        <WriteOp>
+                                            identifier: message
+                                        </WriteOp>
+                                    </BodyOp>
+                                </IfThenElseOp>
+                            </BodyOp>
+                        </IfThenElseOp>
+                        <WriteOp>
+                            identifier: message
+                        </WriteOp>
+                    </BodyOp>
+                </IfThenElseOp>
+            </BodyOp>
+        </DefDeclOp>
+    </DeclsOp>
+    <BeginEndOp>
+        <AssignOp>
+            identifier: k
+            int_const: 6
+        </AssignOp>
+        <WhileOp>
+            <GEOp>
+                identifier: k
+                int_const: 1
+            </GEOp>
+            <BodyOp>
+                <WriteOp>
+                    string_const: "Inserisci n: "
+                </WriteOp>
+                <ReadOp>
+                    identifier: n
+                </ReadOp>
+                <WriteOp>
+                    string_const: "Inserisci m: "
+                </WriteOp>
+                <ReadOp>
+                    identifier: m
+                </ReadOp>
+                <WriteOp>
+                    string_const: "I valori inseriti sono "
+                    identifier: n
+                    string_const: " e "
+                    identifier: m
+                </WriteOp>
+                <CallOp>
+                    identifier: scoping
+                    identifier: n
+                    identifier: m
+                    identifier: message
+                </CallOp>
+                <AssignOp>
+                    identifier: k
+                    <DiffOp>
+                        identifier: k
+                        int_const: 1
+                    </DiffOp>
+                </AssignOp>
+            </BodyOp>
+        </WhileOp>
+        <WriteOp>
+            identifier: message
+        </WriteOp>
+        <WriteOp>
+            <CallOp>
+                identifier: glob
+            </CallOp>
+        </WriteOp>
+    </BeginEndOp>
+</ProgramOp>

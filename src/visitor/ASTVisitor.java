@@ -50,4 +50,6 @@ public interface ASTVisitor {
     void visit(ReturnOp returnOp);
 
     void visit(ExprTailOp exprTailOp);
+
+    void visit(Type type);
 }

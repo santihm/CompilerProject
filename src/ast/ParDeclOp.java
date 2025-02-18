@@ -5,9 +5,9 @@ import java.util.List;
 
 public class ParDeclOp extends ASTNode {
     public List<PVarOp> parameters;  // Lista de parámetros
-    public Identifier type;  // Tipo de los parámetros (integer, boolean, double, string, char)
+    public Type type;  // Tipo de los parámetros (integer, boolean, double, string, char)
 
-    public ParDeclOp(List<PVarOp> parameters, Identifier type) {
+    public ParDeclOp(List<PVarOp> parameters, Type type) {
         this.parameters = parameters;
         this.type = type;
     }

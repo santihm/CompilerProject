@@ -100,24 +100,35 @@ public class XMLVisitor implements ASTVisitor {
     public void visit(CallOp callOp) {
         openTag("CallOp");
         callOp.identifier.accept(this);
-        for (ExprOp arg : callOp.expressions) {
-            arg.accept(this);
+        if (callOp.expressions != null) {
+            for (ExprOp arg : callOp.expressions) {
+                arg.accept(this);
+            }
         }
         closeTag("CallOp");
     }
 
     @Override
     public void visit(Constant constant) {
-        writeContent(constant.type);
+        if (constant.value != null) {
+            writeContent(constant.type + ": " + constant.value);
+        }
+        else {
+            writeContent(constant.type);
+        }
     }
 
     @Override
     public void visit(DefDeclOp defdeclOp) {
         openTag("DefDeclOp");
         defdeclOp.identifier.accept(this);
-        writeContent(defdeclOp.returnType);
-        for(ParDeclOp parDeclOp : defdeclOp.parameters){
-            parDeclOp.accept(this);
+        if (defdeclOp.returnType != null) {
+            defdeclOp.returnType.accept(this);
+        }
+        if (defdeclOp.parameters != null) {
+            for(ParDeclOp parDeclOp : defdeclOp.parameters){
+                parDeclOp.accept(this);
+            }
         }
         defdeclOp.body.accept(this);
         closeTag("DefDeclOp");
@@ -150,7 +161,7 @@ public class XMLVisitor implements ASTVisitor {
 
     @Override
     public void visit(Identifier identifier) {
-        writeContent(identifier.name);
+        writeContent("identifier: " + identifier.name);
     }
 
     @Override
@@ -296,25 +307,101 @@ public class XMLVisitor implements ASTVisitor {
 
     @Override
     public void visit(BinaryOp binaryOp) {
-        openTag("BinaryOp");
-        binaryOp.left.accept(this);
-        writeContent("<operator>" + binaryOp.operator + "</operator>");
-        binaryOp.right.accept(this);
-        closeTag("BinaryOp");
+        switch (binaryOp.operator){
+            case "+":
+                openTag("AddOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("AddOp");
+                break;
+            case "-":
+                openTag("DiffOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("DiffOp");
+                break;
+            case "&&":
+                openTag("AndOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("AndOp");
+                break;
+            case "||":
+                openTag("OrOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("OrOp");
+            case ">":
+                openTag("GTOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("GTOp");
+                break;
+            case ">=":
+                openTag("GEOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("GEOp");
+                break;
+            case "<":
+                openTag("LTOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("LTOp");
+                break;
+            case "<=":
+                openTag("LEOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("LEOp");
+                break;
+            case "==":
+                openTag("EQOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("EQOp");
+                break;
+            case "<>":
+                openTag("NEOp");
+                binaryOp.left.accept(this);
+                binaryOp.right.accept(this);
+                closeTag("NEOp");
+                break;
+        }
     }
 
     @Override
     public void visit(TermTailOp termTailOp) {
-        openTag("TermTailOp");
-        writeContent("<operator>" + termTailOp.getOperator() + "</operator>");
-        termTailOp.factor.accept(this);
-        termTailOp.next.accept(this);
-        closeTag("TermTailOp");
+        //openTag("TermTailOp");
+        //writeContent("<operator>" + termTailOp.getOperator() + "</operator>");
+        //closeTag("TermTailOp");
+        if (termTailOp.operator.equals("*")){
+            openTag("MulOp");
+            if (termTailOp.factor != null) {
+                termTailOp.factor.accept(this);
+            }
+            if (termTailOp.next != null) {
+                termTailOp.next.accept(this);
+            }
+            else {
+                writeContent("Next TermTailOp null");
+            }
+            closeTag("MulOp");
+        }
+        else if (termTailOp.operator.equals("/")){
+            openTag("DivOp");
+            if (termTailOp.factor != null) {
+                termTailOp.factor.accept(this);
+            }
+            if (termTailOp.next != null) {
+                termTailOp.next.accept(this);
+            }
+            closeTag("DivOp");
+        }
     }
 
     @Override
     public void visit(FactorOp factorOp) {
-        openTag("FactorOp");
         if (factorOp.expression != null) {
             factorOp.expression.accept(this);
         }
@@ -331,7 +418,6 @@ public class XMLVisitor implements ASTVisitor {
             writeContent("<operator>" + factorOp.operator + "</operator>");
             factorOp.expression.accept(this);
         }
-        closeTag("FactorOp");
     }
 
     @Override
@@ -358,5 +444,10 @@ public class XMLVisitor implements ASTVisitor {
         writeContent("<operator>" + exprTailOp.getOperator() + "</operator>");
         exprTailOp.getRight().accept(this);
         closeTag("ExprTailOp");
+    }
+
+    @Override
+    public void visit(Type type) {
+        writeContent(type.type);
     }
 }

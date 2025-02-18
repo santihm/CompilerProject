@@ -1,0 +1,263 @@
+<ProgramOp>
+    <DeclsOp>
+        <DefDeclOp>
+            identifier: stampa
+            string
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: messaggio
+                </PVarOp>
+                string
+            </ParDeclOp>
+            <BodyOp>
+                <VarDeclOp>
+                    <VarOptInitOp>
+                        identifier: i
+                    </VarOptInitOp>
+                    int_const : 0
+                </VarDeclOp>
+                <WhileOp>
+                    <LTOp>
+                        identifier: i
+                        int_const : 4
+                    </LTOp>
+                    <BodyOp>
+                        <WriteOp>
+                            string_const : ""
+                        </WriteOp>
+                        <AssignOp>
+                            identifier: i
+                            <AddOp>
+                                identifier: i
+                                int_const : 1
+                            </AddOp>
+                        </AssignOp>
+                    </BodyOp>
+                </WhileOp>
+                <WriteOp>
+                    identifier: messaggio
+                </WriteOp>
+                <ReturnOp>
+                    string_const : "ok"
+                </ReturnOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: sommac
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: a
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: d
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: b
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: size
+                </PVarOp>
+                string
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: result
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <AssignOp>
+                    identifier: result
+                    <AddOp>
+                        identifier: a
+                        identifier: d
+                    </AddOp>
+                </AssignOp>
+                <IfThenElseOp>
+                    <GTOp>
+                        identifier: result
+                        int_const : 100
+                    </GTOp>
+                    <BodyOp>
+                        <AssignOp>
+                            identifier: size
+                            string_const : "grande"
+                        </AssignOp>
+                    </BodyOp>
+                    <BodyOp>
+                        <IfThenElseOp>
+                            <GTOp>
+                                identifier: result
+                                int_const : 50
+                            </GTOp>
+                            <BodyOp>
+                                <AssignOp>
+                                    identifier: size
+                                    string_const : "media"
+                                </AssignOp>
+                            </BodyOp>
+                            <BodyOp>
+                                <AssignOp>
+                                    identifier: size
+                                    string_const : "piccola"
+                                </AssignOp>
+                            </BodyOp>
+                        </IfThenElseOp>
+                    </BodyOp>
+                </IfThenElseOp>
+            </BodyOp>
+        </DefDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: risultato
+            </VarOptInitOp>
+            double
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: taglia
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: ans1
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: ans
+            </VarOptInitOp>
+            string
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: a
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: b
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: x
+            </VarOptInitOp>
+            double
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: c
+            </VarOptInitOp>
+            int_const : 1
+        </VarDeclOp>
+    </DeclsOp>
+    <BeginEndOp>
+        <AssignOp>
+            identifier: a
+            int_const : 1
+        </AssignOp>
+        <AssignOp>
+            identifier: b
+            double_const : 2.2
+        </AssignOp>
+        <AssignOp>
+            identifier: x
+            int_const : 3
+        </AssignOp>
+        <AssignOp>
+            identifier: risultato
+            double_const : 0.0
+        </AssignOp>
+        <AssignOp>
+            identifier: ans
+            string_const : "no"
+        </AssignOp>
+        <CallOp>
+            identifier: sommac
+            identifier: a
+            identifier: x
+            identifier: b
+            identifier: taglia
+            identifier: risultato
+        </CallOp>
+        <CallOp>
+            identifier: stampa
+            <AddOp>
+                string_const : "La somma di "
+                identifier: taglia
+            </AddOp>
+        </CallOp>
+        <CallOp>
+            identifier: stampa
+            <AddOp>
+                string_const : "Ed è pari a "
+                identifier: risultato
+            </AddOp>
+        </CallOp>
+        <WriteOp>
+            string_const : "Vuoi continuare? (si/no) - inserisci due volte la risposta\n"
+        </WriteOp>
+        <ReadOp>
+            identifier: ans
+        </ReadOp>
+        <ReadOp>
+            identifier: ans1
+        </ReadOp>
+        <WhileOp>
+            <EQOp>
+                identifier: ans
+                string_const : "si"
+            </EQOp>
+            <BodyOp>
+                <WriteOp>
+                    string_const : "Inserisci un intero: "
+                </WriteOp>
+                <ReadOp>
+                    identifier: a
+                </ReadOp>
+                <WriteOp>
+                    string_const : "Inserisci un reale: "
+                </WriteOp>
+                <ReadOp>
+                    identifier: b
+                </ReadOp>
+                <CallOp>
+                    identifier: sommac
+                    identifier: a
+                    identifier: x
+                    identifier: b
+                    identifier: taglia
+                    identifier: risultato
+                </CallOp>
+                <CallOp>
+                    identifier: stampa
+                    <AddOp>
+                        string_const : "La somma di "
+                        identifier: taglia
+                    </AddOp>
+                </CallOp>
+                <CallOp>
+                    identifier: stampa
+                    <AddOp>
+                        string_const : "Ed è pari a "
+                        identifier: risultato
+                    </AddOp>
+                </CallOp>
+                <WriteOp>
+                    string_const : "Vuoi continuare? (si/no): "
+                </WriteOp>
+                <ReadOp>
+                    identifier: ans
+                </ReadOp>
+            </BodyOp>
+        </WhileOp>
+        <WriteOp>
+            string_const : ""
+        </WriteOp>
+        <WriteOp>
+            string_const : "Ciao"
+        </WriteOp>
+    </BeginEndOp>
+</ProgramOp>

@@ -48,3 +48,4 @@ ast\PVarOp.class
 ast\EmptyTermTailOp.class
 ast\NotOp.class
 ast\OrOp.class
+ast\Type.class

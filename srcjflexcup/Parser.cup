@@ -262,11 +262,14 @@ import java.util.ArrayList;
 
 
 // Declare the terminal symbols
-terminal PROGRAM, BEGIN, END, COLON, SEMI, PIPE, ASSIGNDECL, ASSIGN, TRUE, FALSE,
-        INT_CONST, DOUBLE_CONST, CHAR_CONST, STRING_CONST, DEF, LPAR, RPAR,
+terminal PROGRAM, BEGIN, END, COLON, SEMI, PIPE, ASSIGNDECL, ASSIGN, TRUE, FALSE, DEF, LPAR, RPAR,
         COMMA, LBRAC, RBRAC, IF, THEN, ELSE, WHILE, DO, RETURN, MINUS, NOT,
-        AND, OR, GT, GE, LT, LE, EQ, NE, PLUS, TIMES, DIV, ID, BOOL, INT, DOUBLE, STRING, CHAR,
-        REF, IN, OUT, OUTNL, ADD, MUL, MAP;
+        AND, OR, GT, GE, LT, LE, EQ, NE, PLUS, TIMES, DIV, ID,
+        REF, IN, OUT, OUTNL, ADD, MUL, MAP, INT, DOUBLE, BOOL, STRING, CHAR;
+
+terminal String STRING_CONST, CHAR_CONST;
+terminal Integer INT_CONST;
+terminal Double DOUBLE_CONST;
 
 
 // Declare non-terminal symbols
@@ -294,7 +297,6 @@ Program ::= PROGRAM Decls:d BEGIN VarDecls:v Statements:s END
 {:
     // Creando el nodo AST para el programa
     RESULT = new ProgramOp(new DeclsOp((List<VarDefDeclOp>)d), new BeginEndOp((List<VarDeclOp>)v, (List<StatOp>)s));
-    //System.out.println("En Program");
 :}
 ;
 
@@ -313,7 +315,11 @@ Decls ::= VarDecl:v Decls:d {:
        | {: RESULT = null; :} ;
 
 // Variable declarations
-VarDecls ::= VarDecls:vs VarDecl:v {: RESULT = new VarDeclsOp((List<VarDeclOp>)vs, (VarDeclOp)v); :}
+VarDecls ::= VarDecls:vs VarDecl:v {:
+                                       List<VarDeclOp> list = (vs == null) ? new ArrayList<>() : new ArrayList<>((List<VarDeclOp>)vs);
+                                       list.add((VarDeclOp)v);
+                                       RESULT = list;
+                                     :}
           | {: RESULT = null; :};
 
 // Individual variable declaration
@@ -349,29 +355,31 @@ VarOptInit ::= ID:i PIPE VarOptInit:v
 
 
 // Type or constant choice
-TypeOrConstant ::= Type:t {: RESULT = new Identifier((String)t); :}
-               | Constant:c {: RESULT = new Constant((String)c); :};
+TypeOrConstant ::= Type:t {: RESULT = new Type((String)t); :}
+               | Constant:c {: RESULT = new Constant((Constant)c); :};
 
 // Types (INT, BOOL, DOUBLE, STRING, CHAR)
-Type ::= INT {: RESULT = new String("int"); :}
-      | BOOL {: RESULT = new String("bool"); :}
-      | DOUBLE {: RESULT = new String("double"); :}
-      | STRING {: RESULT = new String("string"); :}
-      | CHAR {: RESULT = new String("char"); :};
+Type ::= INT:i {: RESULT = new String("int"); :}
+      | BOOL:b {: RESULT = new String("bool"); :}
+      | DOUBLE:d {: RESULT = new String("double"); :}
+      | STRING:s {: RESULT = new String("string"); :}
+      | CHAR:c {: RESULT = new String("char"); :};
+
 
 // Constants (TRUE, FALSE, or numeric/literal constants)
-Constant ::= TRUE {: RESULT = new String("true"); :}
-          | FALSE {: RESULT = new String("false"); :}
-          | INT_CONST {: RESULT = new String("int_const"); :}
-          | DOUBLE_CONST {: RESULT = new String("double_const"); :}
-          | CHAR_CONST {: RESULT = new String("char_const"); :}
-          | STRING_CONST {: RESULT = new String("string_const"); :};
+Constant ::= TRUE {: RESULT = new Constant("true", null); :}
+          | FALSE {: RESULT = new Constant("false", null); :}
+          | INT_CONST:i {: RESULT = new Constant("int_const", i.toString()); :}
+          | DOUBLE_CONST:d {: RESULT = new Constant("double_const", d.toString()); :}
+          | CHAR_CONST:c {: RESULT = new Constant("char_const", c.toString()); :}
+          | STRING_CONST:s {: RESULT = new Constant("string_const", s); :};
+
 
 // Function declaration
 DefDecl ::= DEF ID:i LPAR ParDecls:p RPAR OptType:o Body:b
-            {: RESULT = new DefDeclOp((new Identifier((String)i)), (String)o, (List<ParDeclOp>)p, (BodyOp)b); :}
+            {: RESULT = new DefDeclOp((new Identifier((String)i)), (Type)o, (List<ParDeclOp>)p, (BodyOp)b); :}
          | DEF ID:i LPAR RPAR OptType:o Body:b
-         {: RESULT = new DefDeclOp((new Identifier((String)i)), (String)o, null, (BodyOp)b); :};
+         {: RESULT = new DefDeclOp((new Identifier((String)i)), (Type)o, null, (BodyOp)b); :};
 
 // Parameter declarations
 ParDecls ::= ParDecl:p SEMI ParDecls:ps
@@ -389,7 +397,7 @@ ParDecls ::= ParDecl:p SEMI ParDecls:ps
 
 
 // Parameter declaration
-ParDecl ::= PVars:p COLON Type:t {: RESULT = new ParDeclOp((List<PVarOp>)p, (Identifier)t); :};
+ParDecl ::= PVars:p COLON Type:t {: RESULT = new ParDeclOp((List<PVarOp>)p, new Type((String)t)); :};
 
 // List of parameter variables
 PVars ::= PVar:p COMMA PVars:ps
@@ -411,7 +419,7 @@ PVar ::= ID:i {: RESULT = new PVarOp((new Identifier((String)i)), null); :}
       | REF ID:i {: RESULT = new PVarOp((new Identifier((String)i)), null); :}; //**To fix - Still not know how to solve references to another node
 
 // Optional identifier (can be empty)
-OptType ::= COLON Type:t {: RESULT = new String((String)t); :}
+OptType ::= COLON Type:t {: RESULT = new Type((String)t); :}
          | {: RESULT = null; :};
 
 // Function body
@@ -512,7 +520,7 @@ Factor ::= LPAR Expr:e RPAR
         | FunCall:f
            {: RESULT = new FactorOp((CallOp)f); :}
         | Constant:c
-           {: RESULT = new FactorOp(new Constant((String)c)); :};
+           {: RESULT = new FactorOp(new Constant((Constant)c)); :};
 
 //        | Map;
 

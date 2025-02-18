@@ -1,0 +1,251 @@
+<ProgramOp>
+    <DeclsOp>
+        <DefDeclOp>
+            identifier: saluto
+            string
+            <BodyOp>
+                <ReturnOp>
+                    string_const: "ciao"
+                </ReturnOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: moltiplicazione
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: x
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: y
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: res
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: grande
+                </PVarOp>
+                bool
+            </ParDeclOp>
+            <BodyOp>
+                <VarDeclOp>
+                    <VarOptInitOp>
+                        identifier: risultato
+                        identifier: x
+                        <MulOp>
+                            identifier: y
+                        </MulOp>
+                    </VarOptInitOp>
+                    <VarOptInitOp>
+                        identifier: nonusata
+                    </VarOptInitOp>
+                    double
+                </VarDeclOp>
+                <IfThenElseOp>
+                    <GEOp>
+                        identifier: x
+                        <MulOp>
+                            identifier: y
+                        </MulOp>
+                        int_const: 100
+                    </GEOp>
+                    <BodyOp>
+                        <AssignOp>
+                            identifier: grande
+                            true
+                        </AssignOp>
+                    </BodyOp>
+                    <BodyOp>
+                        <AssignOp>
+                            identifier: grande
+                            false
+                        </AssignOp>
+                    </BodyOp>
+                </IfThenElseOp>
+                <AssignOp>
+                    identifier: res
+                    identifier: risultato
+                </AssignOp>
+            </BodyOp>
+        </DefDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: grande
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: nonusata
+            </VarOptInitOp>
+            bool
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: x
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: y
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: risultato
+            </VarOptInitOp>
+            double
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: i
+            </VarOptInitOp>
+            int_const: 0
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: sommagrande
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: sommapiccola
+            </VarOptInitOp>
+            double
+        </VarDeclOp>
+    </DeclsOp>
+    <BeginEndOp>
+        <AssignOp>
+            identifier: sommagrande
+            identifier: sommapiccola
+            int_const: 0
+            int_const: 0
+        </AssignOp>
+        <WriteOp>
+            string_const: "Questo programma permette di svolgere una serie di moltiplicazioni"
+        </WriteOp>
+        <WriteOp>
+            string_const: "sommando i risultati LE 100 in sommagrande e quelli LE 100 in sommapiccola"
+        </WriteOp>
+        <AssignOp>
+            identifier: i
+            int_const: 1
+        </AssignOp>
+        <WhileOp>
+            <LEOp>
+                identifier: i
+                int_const: 0
+            </LEOp>
+            <BodyOp>
+                <VarDeclOp>
+                    <VarOptInitOp>
+                        identifier: saluto
+                    </VarOptInitOp>
+                    string_const: "ciao"
+                </VarDeclOp>
+                <WriteOp>
+                    string_const: "Quante moltiplicazioni vuoi svolgere? (inserire intero > 0)"
+                </WriteOp>
+                <ReadOp>
+                    identifier: i
+                </ReadOp>
+                <WriteOp>
+                    identifier: saluto
+                </WriteOp>
+            </BodyOp>
+        </WhileOp>
+        <WhileOp>
+            <GTOp>
+                identifier: i
+                int_const: 0
+            </GTOp>
+            <BodyOp>
+                <AssignOp>
+                    identifier: x
+                    int_const: 1
+                </AssignOp>
+                <AssignOp>
+                    identifier: y
+                    int_const: 1
+                </AssignOp>
+                <WhileOp>
+                    <GTOp>
+                        identifier: x
+                        int_const: 0
+                    </GTOp>
+                    <BodyOp>
+                        <VarDeclOp>
+                            <VarOptInitOp>
+                                identifier: saluto
+                            </VarOptInitOp>
+                            string_const: "byebye"
+                        </VarDeclOp>
+                        <WriteOp>
+                            string_const: "Moltiplicazione "
+                            identifier: i
+                            string_const: ": inserisci due numeri positivi"
+                        </WriteOp>
+                        <ReadOp>
+                            identifier: x
+                            identifier: y
+                        </ReadOp>
+                        <WriteOp>
+                            identifier: saluto
+                        </WriteOp>
+                    </BodyOp>
+                </WhileOp>
+                <CallOp>
+                    identifier: moltiplicazione
+                    identifier: x
+                    identifier: y
+                    identifier: risultato
+                    identifier: grande
+                </CallOp>
+                <WriteOp>
+                    identifier: risultato
+                </WriteOp>
+                <IfThenElseOp>
+                    identifier: grande
+                    <BodyOp>
+                        <WriteOp>
+                            string_const: "il risultato e grande"
+                        </WriteOp>
+                        <AssignOp>
+                            identifier: sommagrande
+                            <AddOp>
+                                identifier: sommagrande
+                                identifier: risultato
+                            </AddOp>
+                        </AssignOp>
+                    </BodyOp>
+                    <BodyOp>
+                        <WriteOp>
+                            string_const: "il risultato e piccolo"
+                        </WriteOp>
+                        <AssignOp>
+                            identifier: sommapiccola
+                            <AddOp>
+                                identifier: sommapiccola
+                                identifier: risultato
+                            </AddOp>
+                        </AssignOp>
+                    </BodyOp>
+                </IfThenElseOp>
+                <AssignOp>
+                    identifier: i
+                    <DiffOp>
+                        identifier: i
+                        int_const: 1
+                    </DiffOp>
+                </AssignOp>
+            </BodyOp>
+        </WhileOp>
+        <WriteOp>
+            string_const: "\n sommagrande e "
+            identifier: sommagrande
+        </WriteOp>
+        <WriteOp>
+            string_const: "sommapiccola e "
+            identifier: sommapiccola
+        </WriteOp>
+    </BeginEndOp>
+</ProgramOp>

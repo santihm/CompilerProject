@@ -1,0 +1,426 @@
+<ProgramOp>
+    <DeclsOp>
+        <DefDeclOp>
+            identifier: stampa
+            string
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: stringa
+                </PVarOp>
+                string
+            </ParDeclOp>
+            <BodyOp>
+                <ReturnOp>
+                    <AddOp>
+                        string_const: "Ciao! "
+                        identifier: stringa
+                    </AddOp>
+                </ReturnOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: tutteleoperazioni
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: res1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: res2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: res3
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: res4
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <CallOp>
+                    identifier: somma
+                    identifier: input1
+                    identifier: input2
+                    identifier: res1
+                </CallOp>
+                <CallOp>
+                    identifier: sottrazione
+                    identifier: input1
+                    identifier: input2
+                    identifier: res2
+                </CallOp>
+                <AssignOp>
+                    identifier: res4
+                    <CallOp>
+                        identifier: divisione
+                        identifier: input1
+                        identifier: input2
+                    </CallOp>
+                </AssignOp>
+                <AssignOp>
+                    identifier: res3
+                    <CallOp>
+                        identifier: moltiplicazione
+                        identifier: input1
+                        identifier: input2
+                    </CallOp>
+                </AssignOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: divisione
+            double
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <IfThenOp>
+                    <EQOp>
+                        identifier: input2
+                        int_const: 0
+                    </EQOp>
+                    <BodyOp>
+                        <WriteOp>
+                            string_const: "Errore: divisione per zero"
+                        </WriteOp>
+                        <ReturnOp>
+                            double_const: 0.0
+                        </ReturnOp>
+                    </BodyOp>
+                </IfThenOp>
+                <ReturnOp>
+                    identifier: input1
+                    <DivOp>
+                        identifier: input2
+                    </DivOp>
+                </ReturnOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: moltiplicazione
+            double
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <ReturnOp>
+                    identifier: input1
+                    <MulOp>
+                        identifier: input2
+                    </MulOp>
+                </ReturnOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: sottrazione
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: result
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <AssignOp>
+                    identifier: result
+                    <DiffOp>
+                        identifier: input1
+                        identifier: input2
+                    </DiffOp>
+                </AssignOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: somma
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: result
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <AssignOp>
+                    identifier: result
+                    <AddOp>
+                        identifier: input1
+                        identifier: input2
+                    </AddOp>
+                </AssignOp>
+            </BodyOp>
+        </DefDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: flag
+            </VarOptInitOp>
+            bool
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: input1
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: input2
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: answer
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: result
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: res1
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: res2
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: res3
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: res4
+            </VarOptInitOp>
+            double
+        </VarDeclOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: operazione
+            </VarOptInitOp>
+            string
+        </VarDeclOp>
+    </DeclsOp>
+    <BeginEndOp>
+        <AssignOp>
+            identifier: flag
+            true
+        </AssignOp>
+        <WhileOp>
+            identifier: flag
+            <BodyOp>
+                <WriteOp>
+                    string_const: "Inserisci l'operazione da effettuare (somma, sottrazione, divisione, moltiplicazione, tutteleoperazioni): "
+                </WriteOp>
+                <ReadOp>
+                    identifier: operazione
+                </ReadOp>
+                <WriteOp>
+                    string_const: "Inserisci il primo input: "
+                </WriteOp>
+                <ReadOp>
+                    identifier: input1
+                </ReadOp>
+                <WriteOp>
+                    string_const: "Inserisci il secondo input: "
+                </WriteOp>
+                <ReadOp>
+                    identifier: input2
+                </ReadOp>
+                <WriteOp>
+                    string_const: "Hai scelto l'operazione "
+                    identifier: operazione
+                    string_const: " con gli argomenti "
+                    identifier: input1
+                    string_const: " e "
+                    identifier: input2
+                </WriteOp>
+                <IfThenElseOp>
+                    <EQOp>
+                        identifier: operazione
+                        string_const: "somma"
+                    </EQOp>
+                    <BodyOp>
+                        <CallOp>
+                            identifier: somma
+                            identifier: input1
+                            identifier: input2
+                            identifier: result
+                        </CallOp>
+                    </BodyOp>
+                    <BodyOp>
+                        <IfThenElseOp>
+                            <EQOp>
+                                identifier: operazione
+                                string_const: "sottrazione"
+                            </EQOp>
+                            <BodyOp>
+                                <CallOp>
+                                    identifier: sottrazione
+                                    identifier: input1
+                                    identifier: input2
+                                    identifier: result
+                                </CallOp>
+                            </BodyOp>
+                            <BodyOp>
+                                <IfThenElseOp>
+                                    <EQOp>
+                                        identifier: operazione
+                                        string_const: "divisione"
+                                    </EQOp>
+                                    <BodyOp>
+                                        <AssignOp>
+                                            identifier: result
+                                            <CallOp>
+                                                identifier: divisione
+                                                identifier: input1
+                                                identifier: input2
+                                            </CallOp>
+                                        </AssignOp>
+                                    </BodyOp>
+                                    <BodyOp>
+                                        <IfThenElseOp>
+                                            <EQOp>
+                                                identifier: operazione
+                                                string_const: "moltiplicazione"
+                                            </EQOp>
+                                            <BodyOp>
+                                                <AssignOp>
+                                                    identifier: result
+                                                    <CallOp>
+                                                        identifier: moltiplicazione
+                                                        identifier: input1
+                                                        identifier: input2
+                                                    </CallOp>
+                                                </AssignOp>
+                                            </BodyOp>
+                                            <BodyOp>
+                                                <IfThenElseOp>
+                                                    <EQOp>
+                                                        identifier: operazione
+                                                        string_const: "tutteleoperazioni"
+                                                    </EQOp>
+                                                    <BodyOp>
+                                                        <CallOp>
+                                                            identifier: tutteleoperazioni
+                                                            identifier: input1
+                                                            identifier: input2
+                                                            identifier: res1
+                                                            identifier: res2
+                                                            identifier: res3
+                                                            identifier: res4
+                                                        </CallOp>
+                                                    </BodyOp>
+                                                    <BodyOp>
+                                                        <WriteOp>
+                                                            string_const: "Operazione non consentita"
+                                                        </WriteOp>
+                                                    </BodyOp>
+                                                </IfThenElseOp>
+                                            </BodyOp>
+                                        </IfThenElseOp>
+                                    </BodyOp>
+                                </IfThenElseOp>
+                            </BodyOp>
+                        </IfThenElseOp>
+                    </BodyOp>
+                </IfThenElseOp>
+                <IfThenElseOp>
+                    <NEOp>
+                        identifier: operazione
+                        string_const: "tutteleoperazioni"
+                    </NEOp>
+                    <BodyOp>
+                        <WriteOp>
+                            string_const: "Il risultato è: "
+                            identifier: result
+                        </WriteOp>
+                    </BodyOp>
+                    <BodyOp>
+                        <WriteOp>
+                            <CallOp>
+                                identifier: stampa
+                                <AddOp>
+                                    string_const: "I risultati delle 4 operazioni sono \n"
+                                    string_const: "\n"
+                                </AddOp>
+                            </CallOp>
+                        </WriteOp>
+                    </BodyOp>
+                </IfThenElseOp>
+                <WriteOp>
+                    string_const: "Vuoi continuare? (1 yes/0 no): "
+                </WriteOp>
+                <ReadOp>
+                    identifier: answer
+                </ReadOp>
+                <IfThenElseOp>
+                    <EQOp>
+                        identifier: answer
+                        int_const: 1
+                    </EQOp>
+                    <BodyOp>
+                        <AssignOp>
+                            identifier: flag
+                            true
+                        </AssignOp>
+                    </BodyOp>
+                    <BodyOp>
+                        <AssignOp>
+                            identifier: flag
+                            false
+                        </AssignOp>
+                    </BodyOp>
+                </IfThenElseOp>
+            </BodyOp>
+        </WhileOp>
+    </BeginEndOp>
+</ProgramOp>

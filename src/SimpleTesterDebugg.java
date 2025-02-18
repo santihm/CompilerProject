@@ -1,5 +1,4 @@
 /*
-
 import java.io.*;
 import java_cup.runtime.*;
 import mulet_es5tsc.*;
@@ -13,13 +12,80 @@ public class SimpleTesterDebugg {
             // Código de entrada
             String input = "program\n" +
                     "\n" +
-                    "x | y = 10 : int;\n" +
+                    "// Variable Declarations\n" +
+                    "\n" +
+                    "\n" +
+                    "def scoping(n: int; m: int; ref message: string)\n" +
+                    "{\n" +
+                    "    message := \"level 1\";\n" +
+                    "\n" +
+                    "    if (n <= 1) then {\n" +
+                    "        message := \"level 2.1\";\n" +
+                    "\n" +
+                    "        if (m <= 1) then {\n" +
+                    "            message := \"level 3.1\";\n" +
+                    "            message !>>;\n" +
+                    "        }\n" +
+                    "        else {\n" +
+                    "            if ((m > 1) and (m < 5)) then {\n" +
+                    "                message := \"level 3.2\";\n" +
+                    "                message !>>;\n" +
+                    "            }\n" +
+                    "            else {\n" +
+                    "                message := \"level 3.3\";\n" +
+                    "                message !>>;\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        message !>>;\n" +
+                    "    }\n" +
+                    "    else {\n" +
+                    "        message := \"level 2.2\";\n" +
+                    "\n" +
+                    "        if (m <= 1) then {\n" +
+                    "            message := \"level 3.4\";\n" +
+                    "            message !>>;\n" +
+                    "        }\n" +
+                    "        else {\n" +
+                    "            if ((m > 1) and (m < 5)) then {\n" +
+                    "                message := \"level 3.5\";\n" +
+                    "                message !>>;\n" +
+                    "            }\n" +
+                    "            else {\n" +
+                    "                message := \"level 3.6\";\n" +
+                    "                message !>>;\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        message !>>;\n" +
+                    "    }\n" +
+                    "    // message !>>;\n" +
+                    "}\n" +
+                    "\n" +
+                    "def glob(): int\n" +
+                    "{\n" +
+                    "    return 100;\n" +
+                    "}\n" +
+                    "\n" +
+                    "message : \"level 0\";\n" +
+                    "n | m | k : int;\n" +
                     "\n" +
                     "begin\n" +
-                    "x | y << ;\n" +
-                    "if (x > y) then {\n" +
-                    "\"I valori di x e y sono:\", x, \" \", y !>> ;\n" +
+                    "k := 6;\n" +
+                    "\n" +
+                    "while (k >= 1) do {\n" +
+                    "    \"Inserisci n: \">>;\n" +
+                    "    n <<;\n" +
+                    "    \"Inserisci m: \">>;\n" +
+                    "    m <<;\n" +
+                    "\n" +
+                    "    \"I valori inseriti sono \", n, \" e \", m !>>;\n" +
+                    "\n" +
+                    "    scoping(n, m, message);\n" +
+                    "\n" +
+                    "    k := k - 1;\n" +
                     "}\n" +
+                    "\n" +
+                    "message !>>;\n" +
+                    "glob() !>>;\n" +
                     "end";
 
             // Crear el lexer

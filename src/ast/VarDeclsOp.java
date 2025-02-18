@@ -6,9 +6,8 @@ import java.util.List;
 
 public class VarDeclsOp extends ASTNode {
     public List<VarDeclOp> varDecls;
-    public VarDeclsOp(List<VarDeclOp> decls, VarDeclOp n) {
+    public VarDeclsOp(List<VarDeclOp> decls) {
         this.varDecls = decls;
-        this.varDecls.add(n);
     }
 
     @Override
