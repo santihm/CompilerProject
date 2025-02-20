@@ -5,12 +5,15 @@
             string
             <BodyOp>
                 <ReturnOp>
-                    string_const: "ciao"
+                    <TermOp>
+                        string_const: "ciao"
+                    </TermOp>
                 </ReturnOp>
             </BodyOp>
         </DefDeclOp>
         <DefDeclOp>
             identifier: moltiplicazione
+            void
             <ParDeclOp>
                 <PVarOp>
                     identifier: x
@@ -39,10 +42,13 @@
                 <VarDeclOp>
                     <VarOptInitOp>
                         identifier: risultato
-                        identifier: x
-                        <MulOp>
-                            identifier: y
-                        </MulOp>
+                        <TermOp>
+                            identifier: x
+                            <MulOp>
+                                identifier: y
+                                Next TermTailOp null
+                            </MulOp>
+                        </TermOp>
                     </VarOptInitOp>
                     <VarOptInitOp>
                         identifier: nonusata
@@ -51,28 +57,41 @@
                 </VarDeclOp>
                 <IfThenElseOp>
                     <GEOp>
-                        identifier: x
-                        <MulOp>
-                            identifier: y
-                        </MulOp>
-                        int_const: 100
+                        <TermOp>
+                            <TermOp>
+                                identifier: x
+                                <MulOp>
+                                    identifier: y
+                                    Next TermTailOp null
+                                </MulOp>
+                            </TermOp>
+                        </TermOp>
+                        <TermOp>
+                            int_const: 100
+                        </TermOp>
                     </GEOp>
                     <BodyOp>
                         <AssignOp>
                             identifier: grande
-                            true
+                            <TermOp>
+                                true
+                            </TermOp>
                         </AssignOp>
                     </BodyOp>
                     <BodyOp>
                         <AssignOp>
                             identifier: grande
-                            false
+                            <TermOp>
+                                false
+                            </TermOp>
                         </AssignOp>
                     </BodyOp>
                 </IfThenElseOp>
                 <AssignOp>
                     identifier: res
-                    identifier: risultato
+                    <TermOp>
+                        identifier: risultato
+                    </TermOp>
                 </AssignOp>
             </BodyOp>
         </DefDeclOp>
@@ -117,23 +136,39 @@
         <AssignOp>
             identifier: sommagrande
             identifier: sommapiccola
-            int_const: 0
-            int_const: 0
+            <TermOp>
+                int_const: 0
+            </TermOp>
+            <TermOp>
+                int_const: 0
+            </TermOp>
         </AssignOp>
         <WriteOp>
-            string_const: "Questo programma permette di svolgere una serie di moltiplicazioni"
+            <TermOp>
+                string_const: "Questo programma permette di svolgere una serie di moltiplicazioni"
+            </TermOp>
         </WriteOp>
         <WriteOp>
-            string_const: "sommando i risultati LE 100 in sommagrande e quelli LE 100 in sommapiccola"
+            <TermOp>
+                string_const: "sommando i risultati < 100 in sommagrande e quelli < 100 in sommapiccola"
+            </TermOp>
         </WriteOp>
         <AssignOp>
             identifier: i
-            int_const: 1
+            <TermOp>
+                <UMinusOp>
+                    int_const: 1
+                </UMinusOp>
+            </TermOp>
         </AssignOp>
         <WhileOp>
             <LEOp>
-                identifier: i
-                int_const: 0
+                <TermOp>
+                    identifier: i
+                </TermOp>
+                <TermOp>
+                    int_const: 0
+                </TermOp>
             </LEOp>
             <BodyOp>
                 <VarDeclOp>
@@ -143,35 +178,59 @@
                     string_const: "ciao"
                 </VarDeclOp>
                 <WriteOp>
-                    string_const: "Quante moltiplicazioni vuoi svolgere? (inserire intero > 0)"
+                    <TermOp>
+                        string_const: "Quante moltiplicazioni vuoi svolgere? (inserire intero > 0)"
+                    </TermOp>
                 </WriteOp>
                 <ReadOp>
                     identifier: i
                 </ReadOp>
                 <WriteOp>
-                    identifier: saluto
+                    <TermOp>
+                        identifier: saluto
+                    </TermOp>
                 </WriteOp>
             </BodyOp>
         </WhileOp>
         <WhileOp>
             <GTOp>
-                identifier: i
-                int_const: 0
+                <TermOp>
+                    identifier: i
+                </TermOp>
+                <TermOp>
+                    int_const: 0
+                </TermOp>
             </GTOp>
             <BodyOp>
                 <AssignOp>
                     identifier: x
-                    int_const: 1
+                    <TermOp>
+                        <UMinusOp>
+                            int_const: 1
+                        </UMinusOp>
+                    </TermOp>
                 </AssignOp>
                 <AssignOp>
                     identifier: y
-                    int_const: 1
+                    <TermOp>
+                        <UMinusOp>
+                            int_const: 1
+                        </UMinusOp>
+                    </TermOp>
                 </AssignOp>
                 <WhileOp>
-                    <GTOp>
-                        identifier: x
-                        int_const: 0
-                    </GTOp>
+                    <TermOp>
+                        <NotOp>
+                            <GTOp>
+                                <TermOp>
+                                    identifier: x
+                                </TermOp>
+                                <TermOp>
+                                    int_const: 0
+                                </TermOp>
+                            </GTOp>
+                        </NotOp>
+                    </TermOp>
                     <BodyOp>
                         <VarDeclOp>
                             <VarOptInitOp>
@@ -180,52 +239,84 @@
                             string_const: "byebye"
                         </VarDeclOp>
                         <WriteOp>
-                            string_const: "Moltiplicazione "
-                            identifier: i
-                            string_const: ": inserisci due numeri positivi"
+                            <TermOp>
+                                string_const: "Moltiplicazione "
+                            </TermOp>
+                            <TermOp>
+                                identifier: i
+                            </TermOp>
+                            <TermOp>
+                                string_const: ": inserisci due numeri positivi"
+                            </TermOp>
                         </WriteOp>
                         <ReadOp>
                             identifier: x
                             identifier: y
                         </ReadOp>
                         <WriteOp>
-                            identifier: saluto
+                            <TermOp>
+                                identifier: saluto
+                            </TermOp>
                         </WriteOp>
                     </BodyOp>
                 </WhileOp>
                 <CallOp>
                     identifier: moltiplicazione
-                    identifier: x
-                    identifier: y
-                    identifier: risultato
-                    identifier: grande
+                    <TermOp>
+                        identifier: x
+                    </TermOp>
+                    <TermOp>
+                        identifier: y
+                    </TermOp>
+                    <TermOp>
+                        identifier: risultato
+                    </TermOp>
+                    <TermOp>
+                        identifier: grande
+                    </TermOp>
                 </CallOp>
                 <WriteOp>
-                    identifier: risultato
+                    <TermOp>
+                        identifier: risultato
+                    </TermOp>
                 </WriteOp>
                 <IfThenElseOp>
-                    identifier: grande
+                    <TermOp>
+                        identifier: grande
+                    </TermOp>
                     <BodyOp>
                         <WriteOp>
-                            string_const: "il risultato e grande"
+                            <TermOp>
+                                string_const: "il risultato e grande"
+                            </TermOp>
                         </WriteOp>
                         <AssignOp>
                             identifier: sommagrande
                             <AddOp>
-                                identifier: sommagrande
-                                identifier: risultato
+                                <TermOp>
+                                    identifier: sommagrande
+                                </TermOp>
+                                <TermOp>
+                                    identifier: risultato
+                                </TermOp>
                             </AddOp>
                         </AssignOp>
                     </BodyOp>
                     <BodyOp>
                         <WriteOp>
-                            string_const: "il risultato e piccolo"
+                            <TermOp>
+                                string_const: "il risultato e piccolo"
+                            </TermOp>
                         </WriteOp>
                         <AssignOp>
                             identifier: sommapiccola
                             <AddOp>
-                                identifier: sommapiccola
-                                identifier: risultato
+                                <TermOp>
+                                    identifier: sommapiccola
+                                </TermOp>
+                                <TermOp>
+                                    identifier: risultato
+                                </TermOp>
                             </AddOp>
                         </AssignOp>
                     </BodyOp>
@@ -233,19 +324,31 @@
                 <AssignOp>
                     identifier: i
                     <DiffOp>
-                        identifier: i
-                        int_const: 1
+                        <TermOp>
+                            identifier: i
+                        </TermOp>
+                        <TermOp>
+                            int_const: 1
+                        </TermOp>
                     </DiffOp>
                 </AssignOp>
             </BodyOp>
         </WhileOp>
         <WriteOp>
-            string_const: "\n sommagrande e "
-            identifier: sommagrande
+            <TermOp>
+                string_const: "\n sommagrande e "
+            </TermOp>
+            <TermOp>
+                identifier: sommagrande
+            </TermOp>
         </WriteOp>
         <WriteOp>
-            string_const: "sommapiccola e "
-            identifier: sommapiccola
+            <TermOp>
+                string_const: "sommapiccola e "
+            </TermOp>
+            <TermOp>
+                identifier: sommapiccola
+            </TermOp>
         </WriteOp>
     </BeginEndOp>
 </ProgramOp>

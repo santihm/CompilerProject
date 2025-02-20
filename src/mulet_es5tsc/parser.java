@@ -950,7 +950,7 @@ class CUP$parser$actions {
           case 35: // OptType ::= 
             {
               Object RESULT =null;
-		 RESULT = null; 
+		 RESULT = new Type ("void"); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("OptType",13, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1345,7 +1345,7 @@ class CUP$parser$actions {
           case 62: // TermTail ::= 
             {
               Object RESULT =null;
-		 RESULT = new EmptyTermTailOp(); 
+		 RESULT = null; 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("TermTail",23, ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -1369,7 +1369,7 @@ class CUP$parser$actions {
 		int fleft = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).left;
 		int fright = ((java_cup.runtime.Symbol)CUP$parser$stack.peek()).right;
 		Object f = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.peek()).value;
-		 RESULT = new FactorOp("-", (ExprOp)f); 
+		 RESULT = new FactorOp("MINUS", (ExprOp)f); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("Factor",24, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

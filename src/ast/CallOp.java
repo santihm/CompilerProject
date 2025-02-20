@@ -6,6 +6,7 @@ import java.util.List;
 public class CallOp extends StatOp {
     public Identifier identifier;
     public List<ExprOp> expressions;
+    public String type;
 
     public CallOp(Identifier identifier, List<ExprOp> expressions) {
         this.identifier = identifier;

@@ -4,6 +4,7 @@ import visitor.ASTVisitor;
 
 public class ReturnOp extends StatOp {
     public ExprOp returnValue;
+    public String type;
 
     public ReturnOp(ExprOp returnValue ) {
         this.returnValue = returnValue;

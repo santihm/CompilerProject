@@ -21,11 +21,6 @@ public class TermOp extends ExprOp {
 
     @Override
     public void accept(ASTVisitor visitor) {
-        factor.accept(visitor);  // Procesa el factor
-
-        // Si termTail es NoTermTailOp, no hacemos nada, porque no hay cola del término
-        if (!(termTail instanceof EmptyTermTailOp)) {
-            termTail.accept(visitor);  // Procesa la cola del término si no es vacía
-        }
+        visitor.visit(this);
     }
 }

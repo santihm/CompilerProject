@@ -420,7 +420,7 @@ PVar ::= ID:i {: RESULT = new PVarOp((new Identifier((String)i)), null); :}
 
 // Optional identifier (can be empty)
 OptType ::= COLON Type:t {: RESULT = new Type((String)t); :}
-         | {: RESULT = null; :};
+         | {: RESULT = new Type ("void"); :};
 
 // Function body
 Body ::= LBRAC VarDecls:v Statements:s RBRAC {: RESULT = new BodyOp((List<VarDeclOp>)v, (List<StatOp>)s); :};
@@ -504,7 +504,7 @@ TermTail ::= TIMES Factor:f TermTail:t
          | DIV Factor:f TermTail:t
             {: RESULT = new TermTailOp("/", (FactorOp)f, (TermTailOp)t); :}
          |
-            {: RESULT = new EmptyTermTailOp(); :};  // Caso vacío, no deja null
+            {: RESULT = null; :};  // Caso vacío, no deja null
 
 
 
@@ -512,7 +512,7 @@ TermTail ::= TIMES Factor:f TermTail:t
 Factor ::= LPAR Expr:e RPAR
            {: RESULT = new FactorOp(null, (ExprOp)e); :}
         | MINUS Factor:f
-           {: RESULT = new FactorOp("-", (ExprOp)f); :}
+           {: RESULT = new FactorOp("MINUS", (ExprOp)f); :}
         | NOT Factor:f
            {: RESULT = new FactorOp("not", (ExprOp)f); :}
         | ID:i

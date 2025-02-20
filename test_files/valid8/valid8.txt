@@ -1,0 +1,36 @@
+program
+
+saldo : int;
+
+def depositar(monto : int) {
+    saldo = saldo + monto;
+}
+
+def retirar(monto : int) {
+    if (monto > saldo) then {
+        "Saldo insuficiente!" !>> ;
+    } else {
+        saldo = saldo - monto;
+    }
+}
+
+def consultar() {
+    "Saldo actual:", saldo !>> ;
+}
+
+begin
+    saldo = 1000;
+
+    "Saldo inicial:" !>> ;
+    consultar();
+
+    depositar(500);
+    "Después de depositar 500:" !>> ;
+    consultar();
+
+    retirar(200);
+    "Después de retirar 200:" !>> ;
+    consultar();
+
+    retirar(2000);
+end

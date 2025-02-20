@@ -55,13 +55,23 @@ public class Tester {
                 System.exit(1);
             }
 
+            // Fase de análisis semántico
+            SemanticVisitor semanticVisitor = new SemanticVisitor();
+            ast.accept(semanticVisitor);
+
+            // Si el análisis semántico detecta errores, abortar la ejecución
+            if (semanticVisitor.hasErrors()) {
+                System.err.println("Semantic analysis failed due to errors.");
+                System.exit(1);
+            }
+
             // Crear el visitante XMLVisitor
             XMLVisitor visitor = new XMLVisitor(writer); // Escribe en el archivo
             XMLVisitor consoleVisitor = new XMLVisitor(consoleWriter); // Para imprimir en consola
 
             // Procesar el AST y generar el XML
-            ((ASTNode) ast).accept(visitor);  // Escribir en el archivo XML
-            ((ASTNode) ast).accept(consoleVisitor); // Imprimir en consola
+            ast.accept(visitor);  // Escribir en el archivo XML
+            ast.accept(consoleVisitor); // Imprimir en consola
 
             // Asegúrate de que el contenido XML está completo y correcto
             writer.close();
@@ -72,7 +82,7 @@ public class Tester {
             System.out.println("Generated XML:\n" + stringWriter.toString());
 
             // Imprimir ruta de salida
-            System.out.println("Parsing completed successfully. XML AST output saved to: " + outputFile.getPath());
+            System.out.println("Parsing and semantic analysis completed successfully. XML AST output saved to: " + outputFile.getPath());
         } catch (Exception e) {
             System.err.println("Parsing failed: " + e.getMessage());
         }

@@ -403,7 +403,21 @@ public class XMLVisitor implements ASTVisitor {
     @Override
     public void visit(FactorOp factorOp) {
         if (factorOp.expression != null) {
-            factorOp.expression.accept(this);
+            if (factorOp.operator != null) {
+                if (factorOp.operator.equals("MINUS")){
+                    openTag("UMinusOp");
+                    factorOp.expression.accept(this);
+                    closeTag("UMinusOp");
+                }
+                else if (factorOp.operator.equals("not")){
+                    openTag("NotOp");
+                    factorOp.expression.accept(this);
+                    closeTag("NotOp");
+                }
+            }
+            else{
+                factorOp.expression.accept(this);
+            }
         }
         else if (factorOp.identifier != null) {
             factorOp.identifier.accept(this);
@@ -424,7 +438,9 @@ public class XMLVisitor implements ASTVisitor {
     public void visit(TermOp termOp) {
         openTag("TermOp");
         termOp.factor.accept(this);
-        termOp.termTail.accept(this);
+        if (termOp.termTail != null){
+            termOp.termTail.accept(this);
+        }
         closeTag("TermOp");
     }
 

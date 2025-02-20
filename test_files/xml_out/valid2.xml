@@ -12,14 +12,164 @@
             <BodyOp>
                 <ReturnOp>
                     <AddOp>
-                        string_const: "Ciao! "
-                        identifier: stringa
+                        <TermOp>
+                            string_const: "Ciao! "
+                        </TermOp>
+                        <TermOp>
+                            identifier: stringa
+                        </TermOp>
                     </AddOp>
                 </ReturnOp>
             </BodyOp>
         </DefDeclOp>
         <DefDeclOp>
+            identifier: somma
+            void
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: result
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <AssignOp>
+                    identifier: result
+                    <AddOp>
+                        <TermOp>
+                            identifier: input1
+                        </TermOp>
+                        <TermOp>
+                            identifier: input2
+                        </TermOp>
+                    </AddOp>
+                </AssignOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: divisione
+            double
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <IfThenOp>
+                    <EQOp>
+                        <TermOp>
+                            identifier: input2
+                        </TermOp>
+                        <TermOp>
+                            int_const: 0
+                        </TermOp>
+                    </EQOp>
+                    <BodyOp>
+                        <WriteOp>
+                            <TermOp>
+                                string_const: "Errore: divisione per zero"
+                            </TermOp>
+                        </WriteOp>
+                        <ReturnOp>
+                            <TermOp>
+                                double_const: 0.0
+                            </TermOp>
+                        </ReturnOp>
+                    </BodyOp>
+                </IfThenOp>
+                <ReturnOp>
+                    <TermOp>
+                        identifier: input1
+                        <DivOp>
+                            identifier: input2
+                        </DivOp>
+                    </TermOp>
+                </ReturnOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: moltiplicazione
+            double
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <ReturnOp>
+                    <TermOp>
+                        identifier: input1
+                        <MulOp>
+                            identifier: input2
+                            Next TermTailOp null
+                        </MulOp>
+                    </TermOp>
+                </ReturnOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
+            identifier: sottrazione
+            void
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input1
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: input2
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <ParDeclOp>
+                <PVarOp>
+                    identifier: result
+                </PVarOp>
+                double
+            </ParDeclOp>
+            <BodyOp>
+                <AssignOp>
+                    identifier: result
+                    <DiffOp>
+                        <TermOp>
+                            identifier: input1
+                        </TermOp>
+                        <TermOp>
+                            identifier: input2
+                        </TermOp>
+                    </DiffOp>
+                </AssignOp>
+            </BodyOp>
+        </DefDeclOp>
+        <DefDeclOp>
             identifier: tutteleoperazioni
+            void
             <ParDeclOp>
                 <PVarOp>
                     identifier: input1
@@ -59,153 +209,55 @@
             <BodyOp>
                 <CallOp>
                     identifier: somma
-                    identifier: input1
-                    identifier: input2
-                    identifier: res1
+                    <TermOp>
+                        identifier: input1
+                    </TermOp>
+                    <TermOp>
+                        identifier: input2
+                    </TermOp>
+                    <TermOp>
+                        identifier: res1
+                    </TermOp>
                 </CallOp>
                 <CallOp>
                     identifier: sottrazione
-                    identifier: input1
-                    identifier: input2
-                    identifier: res2
+                    <TermOp>
+                        identifier: input1
+                    </TermOp>
+                    <TermOp>
+                        identifier: input2
+                    </TermOp>
+                    <TermOp>
+                        identifier: res2
+                    </TermOp>
                 </CallOp>
                 <AssignOp>
                     identifier: res4
-                    <CallOp>
-                        identifier: divisione
-                        identifier: input1
-                        identifier: input2
-                    </CallOp>
+                    <TermOp>
+                        <CallOp>
+                            identifier: divisione
+                            <TermOp>
+                                identifier: input1
+                            </TermOp>
+                            <TermOp>
+                                identifier: input2
+                            </TermOp>
+                        </CallOp>
+                    </TermOp>
                 </AssignOp>
                 <AssignOp>
                     identifier: res3
-                    <CallOp>
-                        identifier: moltiplicazione
-                        identifier: input1
-                        identifier: input2
-                    </CallOp>
-                </AssignOp>
-            </BodyOp>
-        </DefDeclOp>
-        <DefDeclOp>
-            identifier: divisione
-            double
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: input1
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: input2
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <BodyOp>
-                <IfThenOp>
-                    <EQOp>
-                        identifier: input2
-                        int_const: 0
-                    </EQOp>
-                    <BodyOp>
-                        <WriteOp>
-                            string_const: "Errore: divisione per zero"
-                        </WriteOp>
-                        <ReturnOp>
-                            double_const: 0.0
-                        </ReturnOp>
-                    </BodyOp>
-                </IfThenOp>
-                <ReturnOp>
-                    identifier: input1
-                    <DivOp>
-                        identifier: input2
-                    </DivOp>
-                </ReturnOp>
-            </BodyOp>
-        </DefDeclOp>
-        <DefDeclOp>
-            identifier: moltiplicazione
-            double
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: input1
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: input2
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <BodyOp>
-                <ReturnOp>
-                    identifier: input1
-                    <MulOp>
-                        identifier: input2
-                    </MulOp>
-                </ReturnOp>
-            </BodyOp>
-        </DefDeclOp>
-        <DefDeclOp>
-            identifier: sottrazione
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: input1
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: input2
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: result
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <BodyOp>
-                <AssignOp>
-                    identifier: result
-                    <DiffOp>
-                        identifier: input1
-                        identifier: input2
-                    </DiffOp>
-                </AssignOp>
-            </BodyOp>
-        </DefDeclOp>
-        <DefDeclOp>
-            identifier: somma
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: input1
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: input2
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <ParDeclOp>
-                <PVarOp>
-                    identifier: result
-                </PVarOp>
-                double
-            </ParDeclOp>
-            <BodyOp>
-                <AssignOp>
-                    identifier: result
-                    <AddOp>
-                        identifier: input1
-                        identifier: input2
-                    </AddOp>
+                    <TermOp>
+                        <CallOp>
+                            identifier: moltiplicazione
+                            <TermOp>
+                                identifier: input1
+                            </TermOp>
+                            <TermOp>
+                                identifier: input2
+                            </TermOp>
+                        </CallOp>
+                    </TermOp>
                 </AssignOp>
             </BodyOp>
         </DefDeclOp>
@@ -252,116 +304,196 @@
     <BeginEndOp>
         <AssignOp>
             identifier: flag
-            true
+            <TermOp>
+                true
+            </TermOp>
         </AssignOp>
         <WhileOp>
-            identifier: flag
+            <TermOp>
+                identifier: flag
+            </TermOp>
             <BodyOp>
                 <WriteOp>
-                    string_const: "Inserisci l'operazione da effettuare (somma, sottrazione, divisione, moltiplicazione, tutteleoperazioni): "
+                    <TermOp>
+                        string_const: "Inserisci l'operazione da effettuare (somma, sottrazione, divisione, moltiplicazione, tutteleoperazioni): "
+                    </TermOp>
                 </WriteOp>
                 <ReadOp>
                     identifier: operazione
                 </ReadOp>
                 <WriteOp>
-                    string_const: "Inserisci il primo input: "
+                    <TermOp>
+                        string_const: "Inserisci il primo input: "
+                    </TermOp>
                 </WriteOp>
                 <ReadOp>
                     identifier: input1
                 </ReadOp>
                 <WriteOp>
-                    string_const: "Inserisci il secondo input: "
+                    <TermOp>
+                        string_const: "Inserisci il secondo input: "
+                    </TermOp>
                 </WriteOp>
                 <ReadOp>
                     identifier: input2
                 </ReadOp>
                 <WriteOp>
-                    string_const: "Hai scelto l'operazione "
-                    identifier: operazione
-                    string_const: " con gli argomenti "
-                    identifier: input1
-                    string_const: " e "
-                    identifier: input2
+                    <TermOp>
+                        string_const: "Hai scelto l'operazione "
+                    </TermOp>
+                    <TermOp>
+                        identifier: operazione
+                    </TermOp>
+                    <TermOp>
+                        string_const: " con gli argomenti "
+                    </TermOp>
+                    <TermOp>
+                        identifier: input1
+                    </TermOp>
+                    <TermOp>
+                        string_const: " e "
+                    </TermOp>
+                    <TermOp>
+                        identifier: input2
+                    </TermOp>
                 </WriteOp>
                 <IfThenElseOp>
                     <EQOp>
-                        identifier: operazione
-                        string_const: "somma"
+                        <TermOp>
+                            identifier: operazione
+                        </TermOp>
+                        <TermOp>
+                            string_const: "somma"
+                        </TermOp>
                     </EQOp>
                     <BodyOp>
                         <CallOp>
                             identifier: somma
-                            identifier: input1
-                            identifier: input2
-                            identifier: result
+                            <TermOp>
+                                identifier: input1
+                            </TermOp>
+                            <TermOp>
+                                identifier: input2
+                            </TermOp>
+                            <TermOp>
+                                identifier: result
+                            </TermOp>
                         </CallOp>
                     </BodyOp>
                     <BodyOp>
                         <IfThenElseOp>
                             <EQOp>
-                                identifier: operazione
-                                string_const: "sottrazione"
+                                <TermOp>
+                                    identifier: operazione
+                                </TermOp>
+                                <TermOp>
+                                    string_const: "sottrazione"
+                                </TermOp>
                             </EQOp>
                             <BodyOp>
                                 <CallOp>
                                     identifier: sottrazione
-                                    identifier: input1
-                                    identifier: input2
-                                    identifier: result
+                                    <TermOp>
+                                        identifier: input1
+                                    </TermOp>
+                                    <TermOp>
+                                        identifier: input2
+                                    </TermOp>
+                                    <TermOp>
+                                        identifier: result
+                                    </TermOp>
                                 </CallOp>
                             </BodyOp>
                             <BodyOp>
                                 <IfThenElseOp>
                                     <EQOp>
-                                        identifier: operazione
-                                        string_const: "divisione"
+                                        <TermOp>
+                                            identifier: operazione
+                                        </TermOp>
+                                        <TermOp>
+                                            string_const: "divisione"
+                                        </TermOp>
                                     </EQOp>
                                     <BodyOp>
                                         <AssignOp>
                                             identifier: result
-                                            <CallOp>
-                                                identifier: divisione
-                                                identifier: input1
-                                                identifier: input2
-                                            </CallOp>
+                                            <TermOp>
+                                                <CallOp>
+                                                    identifier: divisione
+                                                    <TermOp>
+                                                        identifier: input1
+                                                    </TermOp>
+                                                    <TermOp>
+                                                        identifier: input2
+                                                    </TermOp>
+                                                </CallOp>
+                                            </TermOp>
                                         </AssignOp>
                                     </BodyOp>
                                     <BodyOp>
                                         <IfThenElseOp>
                                             <EQOp>
-                                                identifier: operazione
-                                                string_const: "moltiplicazione"
+                                                <TermOp>
+                                                    identifier: operazione
+                                                </TermOp>
+                                                <TermOp>
+                                                    string_const: "moltiplicazione"
+                                                </TermOp>
                                             </EQOp>
                                             <BodyOp>
                                                 <AssignOp>
                                                     identifier: result
-                                                    <CallOp>
-                                                        identifier: moltiplicazione
-                                                        identifier: input1
-                                                        identifier: input2
-                                                    </CallOp>
+                                                    <TermOp>
+                                                        <CallOp>
+                                                            identifier: moltiplicazione
+                                                            <TermOp>
+                                                                identifier: input1
+                                                            </TermOp>
+                                                            <TermOp>
+                                                                identifier: input2
+                                                            </TermOp>
+                                                        </CallOp>
+                                                    </TermOp>
                                                 </AssignOp>
                                             </BodyOp>
                                             <BodyOp>
                                                 <IfThenElseOp>
                                                     <EQOp>
-                                                        identifier: operazione
-                                                        string_const: "tutteleoperazioni"
+                                                        <TermOp>
+                                                            identifier: operazione
+                                                        </TermOp>
+                                                        <TermOp>
+                                                            string_const: "tutteleoperazioni"
+                                                        </TermOp>
                                                     </EQOp>
                                                     <BodyOp>
                                                         <CallOp>
                                                             identifier: tutteleoperazioni
-                                                            identifier: input1
-                                                            identifier: input2
-                                                            identifier: res1
-                                                            identifier: res2
-                                                            identifier: res3
-                                                            identifier: res4
+                                                            <TermOp>
+                                                                identifier: input1
+                                                            </TermOp>
+                                                            <TermOp>
+                                                                identifier: input2
+                                                            </TermOp>
+                                                            <TermOp>
+                                                                identifier: res1
+                                                            </TermOp>
+                                                            <TermOp>
+                                                                identifier: res2
+                                                            </TermOp>
+                                                            <TermOp>
+                                                                identifier: res3
+                                                            </TermOp>
+                                                            <TermOp>
+                                                                identifier: res4
+                                                            </TermOp>
                                                         </CallOp>
                                                     </BodyOp>
                                                     <BodyOp>
                                                         <WriteOp>
-                                                            string_const: "Operazione non consentita"
+                                                            <TermOp>
+                                                                string_const: "Operazione non consentita"
+                                                            </TermOp>
                                                         </WriteOp>
                                                     </BodyOp>
                                                 </IfThenElseOp>
@@ -375,48 +507,72 @@
                 </IfThenElseOp>
                 <IfThenElseOp>
                     <NEOp>
-                        identifier: operazione
-                        string_const: "tutteleoperazioni"
+                        <TermOp>
+                            identifier: operazione
+                        </TermOp>
+                        <TermOp>
+                            string_const: "tutteleoperazioni"
+                        </TermOp>
                     </NEOp>
                     <BodyOp>
                         <WriteOp>
-                            string_const: "Il risultato è: "
-                            identifier: result
+                            <TermOp>
+                                string_const: "Il risultato è: "
+                            </TermOp>
+                            <TermOp>
+                                identifier: result
+                            </TermOp>
                         </WriteOp>
                     </BodyOp>
                     <BodyOp>
                         <WriteOp>
-                            <CallOp>
-                                identifier: stampa
-                                <AddOp>
-                                    string_const: "I risultati delle 4 operazioni sono \n"
-                                    string_const: "\n"
-                                </AddOp>
-                            </CallOp>
+                            <TermOp>
+                                <CallOp>
+                                    identifier: stampa
+                                    <AddOp>
+                                        <TermOp>
+                                            string_const: "I risultati delle 4 operazioni sono \n"
+                                        </TermOp>
+                                        <TermOp>
+                                            string_const: "\n"
+                                        </TermOp>
+                                    </AddOp>
+                                </CallOp>
+                            </TermOp>
                         </WriteOp>
                     </BodyOp>
                 </IfThenElseOp>
                 <WriteOp>
-                    string_const: "Vuoi continuare? (1 yes/0 no): "
+                    <TermOp>
+                        string_const: "Vuoi continuare? (1 yes/0 no): "
+                    </TermOp>
                 </WriteOp>
                 <ReadOp>
                     identifier: answer
                 </ReadOp>
                 <IfThenElseOp>
                     <EQOp>
-                        identifier: answer
-                        int_const: 1
+                        <TermOp>
+                            identifier: answer
+                        </TermOp>
+                        <TermOp>
+                            int_const: 1
+                        </TermOp>
                     </EQOp>
                     <BodyOp>
                         <AssignOp>
                             identifier: flag
-                            true
+                            <TermOp>
+                                true
+                            </TermOp>
                         </AssignOp>
                     </BodyOp>
                     <BodyOp>
                         <AssignOp>
                             identifier: flag
-                            false
+                            <TermOp>
+                                false
+                            </TermOp>
                         </AssignOp>
                     </BodyOp>
                 </IfThenElseOp>

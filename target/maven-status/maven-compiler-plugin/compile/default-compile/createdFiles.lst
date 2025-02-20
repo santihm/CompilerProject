@@ -3,10 +3,12 @@ ast\GEOp.class
 mulet_es5tsc\sym.class
 ast\IfThenElseOp.class
 ast\FactorOp.class
+visitor\SemanticException.class
 ast\Constant.class
 ast\VarOptInitOp.class
 ast\ExprOp.class
 ast\StatOp.class
+visitor\SymbolTableEntry.class
 ast\GTOp.class
 ast\ProgramOp.class
 ast\TypeConstant.class
@@ -22,6 +24,7 @@ ast\BeginEndOp.class
 ast\ExprTailOp.class
 ast\DeclsOp.class
 ast\IfThenOp.class
+visitor\SemanticVisitor.class
 ast\DiffOp.class
 ast\ParDeclOp.class
 ast\TermOp.class
@@ -35,6 +38,7 @@ ast\BodyOp.class
 ast\VarDefDeclOp.class
 mulet_es5tsc\parser$CUP$parser$actions.class
 mulet_es5tsc\parser.class
+visitor\SymbolTable.class
 ast\AssignOp.class
 ast\ReadOp.class
 ast\Identifier.class

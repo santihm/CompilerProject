@@ -1,0 +1,28 @@
+program
+
+n : int;
+i : int;
+j : int;
+is_prime : bool;
+
+def isPrime(num : int) : bool {
+    if (num <= 1) then return false;
+    if (num == 2) then return true;
+
+    for (j = 2; j < num; j = j + 1) {
+        if (num % j == 0) then return false;
+    }
+    return true;
+}
+
+begin
+    n = 30;
+    "Números primos hasta", n, ":" !>> ;
+
+    for (i = 1; i <= n; i = i + 1) {
+        is_prime = isPrime(i);
+        if (is_prime) then {
+            i !>> ;
+        }
+    }
+end

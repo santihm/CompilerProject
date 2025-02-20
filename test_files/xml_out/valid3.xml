@@ -23,12 +23,15 @@
             int
             <BodyOp>
                 <ReturnOp>
-                    int_const: 100
+                    <TermOp>
+                        int_const: 100
+                    </TermOp>
                 </ReturnOp>
             </BodyOp>
         </DefDeclOp>
         <DefDeclOp>
             identifier: scoping
+            void
             <ParDeclOp>
                 <PVarOp>
                     identifier: n
@@ -50,123 +53,193 @@
             <BodyOp>
                 <AssignOp>
                     identifier: message
-                    string_const: "level 1"
+                    <TermOp>
+                        string_const: "level 1"
+                    </TermOp>
                 </AssignOp>
                 <IfThenElseOp>
                     <LEOp>
-                        identifier: n
-                        int_const: 1
+                        <TermOp>
+                            identifier: n
+                        </TermOp>
+                        <TermOp>
+                            int_const: 1
+                        </TermOp>
                     </LEOp>
                     <BodyOp>
                         <AssignOp>
                             identifier: message
-                            string_const: "level 2.1"
+                            <TermOp>
+                                string_const: "level 2.1"
+                            </TermOp>
                         </AssignOp>
                         <IfThenElseOp>
                             <LEOp>
-                                identifier: m
-                                int_const: 1
+                                <TermOp>
+                                    identifier: m
+                                </TermOp>
+                                <TermOp>
+                                    int_const: 1
+                                </TermOp>
                             </LEOp>
                             <BodyOp>
                                 <AssignOp>
                                     identifier: message
-                                    string_const: "level 3.1"
+                                    <TermOp>
+                                        string_const: "level 3.1"
+                                    </TermOp>
                                 </AssignOp>
                                 <WriteOp>
-                                    identifier: message
+                                    <TermOp>
+                                        identifier: message
+                                    </TermOp>
                                 </WriteOp>
                             </BodyOp>
                             <BodyOp>
                                 <IfThenElseOp>
                                     <AndOp>
-                                        <GTOp>
-                                            identifier: m
-                                            int_const: 1
-                                        </GTOp>
-                                        <LTOp>
-                                            identifier: m
-                                            int_const: 5
-                                        </LTOp>
+                                        <TermOp>
+                                            <GTOp>
+                                                <TermOp>
+                                                    identifier: m
+                                                </TermOp>
+                                                <TermOp>
+                                                    int_const: 1
+                                                </TermOp>
+                                            </GTOp>
+                                        </TermOp>
+                                        <TermOp>
+                                            <LTOp>
+                                                <TermOp>
+                                                    identifier: m
+                                                </TermOp>
+                                                <TermOp>
+                                                    int_const: 5
+                                                </TermOp>
+                                            </LTOp>
+                                        </TermOp>
                                     </AndOp>
                                     <BodyOp>
                                         <AssignOp>
                                             identifier: message
-                                            string_const: "level 3.2"
+                                            <TermOp>
+                                                string_const: "level 3.2"
+                                            </TermOp>
                                         </AssignOp>
                                         <WriteOp>
-                                            identifier: message
+                                            <TermOp>
+                                                identifier: message
+                                            </TermOp>
                                         </WriteOp>
                                     </BodyOp>
                                     <BodyOp>
                                         <AssignOp>
                                             identifier: message
-                                            string_const: "level 3.3"
+                                            <TermOp>
+                                                string_const: "level 3.3"
+                                            </TermOp>
                                         </AssignOp>
                                         <WriteOp>
-                                            identifier: message
+                                            <TermOp>
+                                                identifier: message
+                                            </TermOp>
                                         </WriteOp>
                                     </BodyOp>
                                 </IfThenElseOp>
                             </BodyOp>
                         </IfThenElseOp>
                         <WriteOp>
-                            identifier: message
+                            <TermOp>
+                                identifier: message
+                            </TermOp>
                         </WriteOp>
                     </BodyOp>
                     <BodyOp>
                         <AssignOp>
                             identifier: message
-                            string_const: "level 2.2"
+                            <TermOp>
+                                string_const: "level 2.2"
+                            </TermOp>
                         </AssignOp>
                         <IfThenElseOp>
                             <LEOp>
-                                identifier: m
-                                int_const: 1
+                                <TermOp>
+                                    identifier: m
+                                </TermOp>
+                                <TermOp>
+                                    int_const: 1
+                                </TermOp>
                             </LEOp>
                             <BodyOp>
                                 <AssignOp>
                                     identifier: message
-                                    string_const: "level 3.4"
+                                    <TermOp>
+                                        string_const: "level 3.4"
+                                    </TermOp>
                                 </AssignOp>
                                 <WriteOp>
-                                    identifier: message
+                                    <TermOp>
+                                        identifier: message
+                                    </TermOp>
                                 </WriteOp>
                             </BodyOp>
                             <BodyOp>
                                 <IfThenElseOp>
                                     <AndOp>
-                                        <GTOp>
-                                            identifier: m
-                                            int_const: 1
-                                        </GTOp>
-                                        <LTOp>
-                                            identifier: m
-                                            int_const: 5
-                                        </LTOp>
+                                        <TermOp>
+                                            <GTOp>
+                                                <TermOp>
+                                                    identifier: m
+                                                </TermOp>
+                                                <TermOp>
+                                                    int_const: 1
+                                                </TermOp>
+                                            </GTOp>
+                                        </TermOp>
+                                        <TermOp>
+                                            <LTOp>
+                                                <TermOp>
+                                                    identifier: m
+                                                </TermOp>
+                                                <TermOp>
+                                                    int_const: 5
+                                                </TermOp>
+                                            </LTOp>
+                                        </TermOp>
                                     </AndOp>
                                     <BodyOp>
                                         <AssignOp>
                                             identifier: message
-                                            string_const: "level 3.5"
+                                            <TermOp>
+                                                string_const: "level 3.5"
+                                            </TermOp>
                                         </AssignOp>
                                         <WriteOp>
-                                            identifier: message
+                                            <TermOp>
+                                                identifier: message
+                                            </TermOp>
                                         </WriteOp>
                                     </BodyOp>
                                     <BodyOp>
                                         <AssignOp>
                                             identifier: message
-                                            string_const: "level 3.6"
+                                            <TermOp>
+                                                string_const: "level 3.6"
+                                            </TermOp>
                                         </AssignOp>
                                         <WriteOp>
-                                            identifier: message
+                                            <TermOp>
+                                                identifier: message
+                                            </TermOp>
                                         </WriteOp>
                                     </BodyOp>
                                 </IfThenElseOp>
                             </BodyOp>
                         </IfThenElseOp>
                         <WriteOp>
-                            identifier: message
+                            <TermOp>
+                                identifier: message
+                            </TermOp>
                         </WriteOp>
                     </BodyOp>
                 </IfThenElseOp>
@@ -176,54 +249,86 @@
     <BeginEndOp>
         <AssignOp>
             identifier: k
-            int_const: 6
+            <TermOp>
+                int_const: 6
+            </TermOp>
         </AssignOp>
         <WhileOp>
             <GEOp>
-                identifier: k
-                int_const: 1
+                <TermOp>
+                    identifier: k
+                </TermOp>
+                <TermOp>
+                    int_const: 1
+                </TermOp>
             </GEOp>
             <BodyOp>
                 <WriteOp>
-                    string_const: "Inserisci n: "
+                    <TermOp>
+                        string_const: "Inserisci n: "
+                    </TermOp>
                 </WriteOp>
                 <ReadOp>
                     identifier: n
                 </ReadOp>
                 <WriteOp>
-                    string_const: "Inserisci m: "
+                    <TermOp>
+                        string_const: "Inserisci m: "
+                    </TermOp>
                 </WriteOp>
                 <ReadOp>
                     identifier: m
                 </ReadOp>
                 <WriteOp>
-                    string_const: "I valori inseriti sono "
-                    identifier: n
-                    string_const: " e "
-                    identifier: m
+                    <TermOp>
+                        string_const: "I valori inseriti sono "
+                    </TermOp>
+                    <TermOp>
+                        identifier: n
+                    </TermOp>
+                    <TermOp>
+                        string_const: " e "
+                    </TermOp>
+                    <TermOp>
+                        identifier: m
+                    </TermOp>
                 </WriteOp>
                 <CallOp>
                     identifier: scoping
-                    identifier: n
-                    identifier: m
-                    identifier: message
+                    <TermOp>
+                        identifier: n
+                    </TermOp>
+                    <TermOp>
+                        identifier: m
+                    </TermOp>
+                    <TermOp>
+                        identifier: message
+                    </TermOp>
                 </CallOp>
                 <AssignOp>
                     identifier: k
                     <DiffOp>
-                        identifier: k
-                        int_const: 1
+                        <TermOp>
+                            identifier: k
+                        </TermOp>
+                        <TermOp>
+                            int_const: 1
+                        </TermOp>
                     </DiffOp>
                 </AssignOp>
             </BodyOp>
         </WhileOp>
         <WriteOp>
-            identifier: message
+            <TermOp>
+                identifier: message
+            </TermOp>
         </WriteOp>
         <WriteOp>
-            <CallOp>
-                identifier: glob
-            </CallOp>
+            <TermOp>
+                <CallOp>
+                    identifier: glob
+                </CallOp>
+            </TermOp>
         </WriteOp>
     </BeginEndOp>
 </ProgramOp>

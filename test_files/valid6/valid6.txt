@@ -1,0 +1,16 @@
+program
+
+num : int;
+fact_result : int;
+
+def factorial(n : int) : int {
+    if (n <= 1) then return 1;
+    return n * factorial(n - 1);
+}
+
+begin
+    num = 5;
+    fact_result = factorial(num);
+
+    "Factorial de", num, "es:", fact_result !>> ;
+end

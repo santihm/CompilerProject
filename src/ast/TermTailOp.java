@@ -6,6 +6,7 @@ public class TermTailOp extends ASTNode {
     public String operator;
     public FactorOp factor;
     public TermTailOp next;
+    public String type;
 
     public TermTailOp(String operator, FactorOp factor, TermTailOp next) {
         this.operator = operator;

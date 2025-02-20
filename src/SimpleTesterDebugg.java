@@ -3,6 +3,7 @@ import java.io.*;
 import java_cup.runtime.*;
 import mulet_es5tsc.*;
 import visitor.XMLVisitor;
+import visitor.SemanticVisitor;
 import ast.ASTNode;
 
 public class SimpleTesterDebugg {
@@ -10,82 +11,77 @@ public class SimpleTesterDebugg {
     public static void main(String[] args) {
         try {
             // Código de entrada
-            String input = "program\n" +
+            String input = "/* Esempio base del linguaggio Toy3 \n" +
                     "\n" +
-                    "// Variable Declarations\n" +
+                    "program\n" +
                     "\n" +
+                    " sommagrande | sommapiccola: double;\n" +
+                    " i:0;\n" +
+                    " x | y | risultato : double;\n" +
+                    " grande | nonusata: bool;\n" +
                     "\n" +
-                    "def scoping(n: int; m: int; ref message: string)\n" +
-                    "{\n" +
-                    "    message := \"level 1\";\n" +
+                    " def moltiplicazione( x: double; y: double; ref res : double; ref  grande: bool)\n" +
+                    " {\n" +
+                    "\trisultato= x*y | nonusata : double;\n" +
                     "\n" +
-                    "    if (n <= 1) then {\n" +
-                    "        message := \"level 2.1\";\n" +
+                    "\tif ((x*y) >= 100) then {\n" +
+                    "\t\tgrande := true;\n" +
+                    "\t}\n" +
+                    "\telse{\n" +
+                    "\t\tgrande := false;\n" +
+                    "\t}\n" +
+                    "\tres := risultato;                   // commento di prova\n" +
+                    " }\n" +
                     "\n" +
-                    "        if (m <= 1) then {\n" +
-                    "            message := \"level 3.1\";\n" +
-                    "            message !>>;\n" +
-                    "        }\n" +
-                    "        else {\n" +
-                    "            if ((m > 1) and (m < 5)) then {\n" +
-                    "                message := \"level 3.2\";\n" +
-                    "                message !>>;\n" +
-                    "            }\n" +
-                    "            else {\n" +
-                    "                message := \"level 3.3\";\n" +
-                    "                message !>>;\n" +
-                    "            }\n" +
-                    "        }\n" +
-                    "        message !>>;\n" +
-                    "    }\n" +
-                    "    else {\n" +
-                    "        message := \"level 2.2\";\n" +
+                    " def saluto(): string\n" +
+                    " {\n" +
+                    "\treturn \"ciao\";\n" +
+                    " }\n" +
                     "\n" +
-                    "        if (m <= 1) then {\n" +
-                    "            message := \"level 3.4\";\n" +
-                    "            message !>>;\n" +
-                    "        }\n" +
-                    "        else {\n" +
-                    "            if ((m > 1) and (m < 5)) then {\n" +
-                    "                message := \"level 3.5\";\n" +
-                    "                message !>>;\n" +
-                    "            }\n" +
-                    "            else {\n" +
-                    "                message := \"level 3.6\";\n" +
-                    "                message !>>;\n" +
-                    "            }\n" +
-                    "        }\n" +
-                    "        message !>>;\n" +
-                    "    }\n" +
-                    "    // message !>>;\n" +
-                    "}\n" +
-                    "\n" +
-                    "def glob(): int\n" +
-                    "{\n" +
-                    "    return 100;\n" +
-                    "}\n" +
-                    "\n" +
-                    "message : \"level 0\";\n" +
-                    "n | m | k : int;\n" +
                     "\n" +
                     "begin\n" +
-                    "k := 6;\n" +
                     "\n" +
-                    "while (k >= 1) do {\n" +
-                    "    \"Inserisci n: \">>;\n" +
-                    "    n <<;\n" +
-                    "    \"Inserisci m: \">>;\n" +
-                    "    m <<;\n" +
+                    "sommagrande | sommapiccola := 0, 0;\n" +
                     "\n" +
-                    "    \"I valori inseriti sono \", n, \" e \", m !>>;\n" +
+                    "\"Questo programma permette di svolgere una serie di moltiplicazioni\" !>>;\n" +
+                    "\"sommando i risultati < 100 in sommagrande e quelli < 100 in sommapiccola\" !>>;\n" +
                     "\n" +
-                    "    scoping(n, m, message);\n" +
-                    "\n" +
-                    "    k := k - 1;\n" +
+                    "i := -1;\n" +
+                    "while (i <= 0) do{\n" +
+                    "\tsaluto : \"ciao\";\n" +
+                    "\t\"Quante moltiplicazioni vuoi svolgere? (inserire intero > 0)\">>;\n" +
+                    "\ti <<;\n" +
+                    "\tsaluto !>>;\n" +
                     "}\n" +
                     "\n" +
-                    "message !>>;\n" +
-                    "glob() !>>;\n" +
+                    "while (i > 0) do{\n" +
+                    "\n" +
+                    "\tx := -1;\n" +
+                    "\ty := -1;\n" +
+                    "\n" +
+                    "\twhile (not(x > 0 and y >0)) do\n" +
+                    "\t{\n" +
+                    "\t\tsaluto :\"byebye\";\n" +
+                    "\t\t\"Moltiplicazione \" , i , \": inserisci due numeri positivi\" !>>;\n" +
+                    "\t\tx | y <<;\n" +
+                    "\t\tsaluto !>>;\n" +
+                    "\t}\n" +
+                    "\n" +
+                    "\tmoltiplicazione(x, y , risultato, grande);\n" +
+                    "\trisultato !>>;\n" +
+                    "\n" +
+                    "\tif(grande) then{\n" +
+                    "\t\t\"il risultato e grande\" !>>;\n" +
+                    "\t\tsommagrande := sommagrande + risultato;\n" +
+                    "\t}else{\n" +
+                    "\t\t\"il risultato e piccolo\" !>>;\n" +
+                    "\t\tsommapiccola := sommapiccola + risultato;\n" +
+                    "\t}\n" +
+                    "\ti := i-1;\n" +
+                    "}\n" +
+                    "\t\"\\n sommagrande e \", sommagrande !>>;\n" +
+                    "\t\"sommapiccola e \", sommapiccola !>>;\n" +
+                    "\n" +
                     "end";
 
             // Crear el lexer
@@ -109,14 +105,23 @@ public class SimpleTesterDebugg {
             Symbol sym = parser.debug_parse();
             ASTNode ast = (ASTNode) sym.value;
 
-
-
             // Comprobar si el AST es válido
             if (ast == null) {
                 System.err.println("Error: AST is null. Check your parser.");
                 return;
             }
 
+            // Aplicar el análisis semántico
+            System.out.println("\nSemantic Analysis:");
+            SemanticVisitor semanticVisitor = new SemanticVisitor();
+            ast.accept(semanticVisitor);
+
+            if (semanticVisitor.hasErrors()) {
+                System.err.println("Semantic analysis failed with errors:");
+                return;
+            } else {
+                System.out.println("Semantic analysis completed successfully.");
+            }
 
             // Crear un escritor para imprimir el XML en pantalla
             StringWriter stringWriter = new StringWriter();
@@ -124,7 +129,7 @@ public class SimpleTesterDebugg {
 
             // Aplicar el visitante para generar XML
             XMLVisitor visitor = new XMLVisitor(xmlWriter);
-            ((ASTNode) ast).accept(visitor);
+            ast.accept(visitor);
 
             // Imprimir el XML generado en consola
             xmlWriter.flush();
