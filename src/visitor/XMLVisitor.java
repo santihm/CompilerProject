@@ -436,12 +436,10 @@ public class XMLVisitor implements ASTVisitor {
 
     @Override
     public void visit(TermOp termOp) {
-        openTag("TermOp");
         termOp.factor.accept(this);
         if (termOp.termTail != null){
             termOp.termTail.accept(this);
         }
-        closeTag("TermOp");
     }
 
     @Override

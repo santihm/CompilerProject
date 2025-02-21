@@ -18,41 +18,27 @@
                 </VarDeclOp>
                 <WhileOp>
                     <LTOp>
-                        <TermOp>
-                            identifier: i
-                        </TermOp>
-                        <TermOp>
-                            int_const: 4
-                        </TermOp>
+                        identifier: i
+                        int_const: 4
                     </LTOp>
                     <BodyOp>
                         <WriteOp>
-                            <TermOp>
-                                string_const: ""
-                            </TermOp>
+                            string_const: ""
                         </WriteOp>
                         <AssignOp>
                             identifier: i
                             <AddOp>
-                                <TermOp>
-                                    identifier: i
-                                </TermOp>
-                                <TermOp>
-                                    int_const: 1
-                                </TermOp>
+                                identifier: i
+                                int_const: 1
                             </AddOp>
                         </AssignOp>
                     </BodyOp>
                 </WhileOp>
                 <WriteOp>
-                    <TermOp>
-                        identifier: messaggio
-                    </TermOp>
+                    identifier: messaggio
                 </WriteOp>
                 <ReturnOp>
-                    <TermOp>
-                        string_const: "ok"
-                    </TermOp>
+                    string_const: "ok"
                 </ReturnOp>
             </BodyOp>
         </DefDeclOp>
@@ -93,55 +79,37 @@
                 <AssignOp>
                     identifier: result
                     <AddOp>
-                        <TermOp>
-                            identifier: a
-                        </TermOp>
-                        <TermOp>
-                            identifier: d
-                        </TermOp>
+                        identifier: a
+                        identifier: d
                     </AddOp>
                 </AssignOp>
                 <IfThenElseOp>
                     <GTOp>
-                        <TermOp>
-                            identifier: result
-                        </TermOp>
-                        <TermOp>
-                            int_const: 100
-                        </TermOp>
+                        identifier: result
+                        int_const: 100
                     </GTOp>
                     <BodyOp>
                         <AssignOp>
                             identifier: size
-                            <TermOp>
-                                string_const: "grande"
-                            </TermOp>
+                            string_const: "grande"
                         </AssignOp>
                     </BodyOp>
                     <BodyOp>
                         <IfThenElseOp>
                             <GTOp>
-                                <TermOp>
-                                    identifier: result
-                                </TermOp>
-                                <TermOp>
-                                    int_const: 50
-                                </TermOp>
+                                identifier: result
+                                int_const: 50
                             </GTOp>
                             <BodyOp>
                                 <AssignOp>
                                     identifier: size
-                                    <TermOp>
-                                        string_const: "media"
-                                    </TermOp>
+                                    string_const: "media"
                                 </AssignOp>
                             </BodyOp>
                             <BodyOp>
                                 <AssignOp>
                                     identifier: size
-                                    <TermOp>
-                                        string_const: "piccola"
-                                    </TermOp>
+                                    string_const: "piccola"
                                 </AssignOp>
                             </BodyOp>
                         </IfThenElseOp>
@@ -189,78 +157,48 @@
     <BeginEndOp>
         <AssignOp>
             identifier: a
-            <TermOp>
-                int_const: 1
-            </TermOp>
+            int_const: 1
         </AssignOp>
         <AssignOp>
             identifier: b
-            <TermOp>
-                double_const: 2.2
-            </TermOp>
+            double_const: 2.2
         </AssignOp>
         <AssignOp>
             identifier: x
-            <TermOp>
-                int_const: 3
-            </TermOp>
+            int_const: 3
         </AssignOp>
         <AssignOp>
             identifier: risultato
-            <TermOp>
-                double_const: 0.0
-            </TermOp>
+            double_const: 0.0
         </AssignOp>
         <AssignOp>
             identifier: ans
-            <TermOp>
-                string_const: "no"
-            </TermOp>
+            string_const: "no"
         </AssignOp>
         <CallOp>
             identifier: sommac
-            <TermOp>
-                identifier: a
-            </TermOp>
-            <TermOp>
-                identifier: x
-            </TermOp>
-            <TermOp>
-                identifier: b
-            </TermOp>
-            <TermOp>
-                identifier: taglia
-            </TermOp>
-            <TermOp>
-                identifier: risultato
-            </TermOp>
+            identifier: a
+            identifier: x
+            identifier: b
+            identifier: taglia
+            identifier: risultato
         </CallOp>
         <CallOp>
             identifier: stampa
             <AddOp>
-                <TermOp>
-                    string_const: "La somma di "
-                </TermOp>
-                <TermOp>
-                    identifier: taglia
-                </TermOp>
+                string_const: "La somma di "
+                identifier: taglia
             </AddOp>
         </CallOp>
         <CallOp>
             identifier: stampa
             <AddOp>
-                <TermOp>
-                    string_const: "Ed è pari a "
-                </TermOp>
-                <TermOp>
-                    identifier: risultato
-                </TermOp>
+                string_const: "Ed è pari a "
+                identifier: risultato
             </AddOp>
         </CallOp>
         <WriteOp>
-            <TermOp>
-                string_const: "Vuoi continuare? (si/no) - inserisci due volte la risposta\n"
-            </TermOp>
+            string_const: "Vuoi continuare? (si/no) - inserisci due volte la risposta\n"
         </WriteOp>
         <ReadOp>
             identifier: ans
@@ -270,74 +208,46 @@
         </ReadOp>
         <WhileOp>
             <EQOp>
-                <TermOp>
-                    identifier: ans
-                </TermOp>
-                <TermOp>
-                    string_const: "si"
-                </TermOp>
+                identifier: ans
+                string_const: "si"
             </EQOp>
             <BodyOp>
                 <WriteOp>
-                    <TermOp>
-                        string_const: "Inserisci un intero: "
-                    </TermOp>
+                    string_const: "Inserisci un intero: "
                 </WriteOp>
                 <ReadOp>
                     identifier: a
                 </ReadOp>
                 <WriteOp>
-                    <TermOp>
-                        string_const: "Inserisci un reale: "
-                    </TermOp>
+                    string_const: "Inserisci un reale: "
                 </WriteOp>
                 <ReadOp>
                     identifier: b
                 </ReadOp>
                 <CallOp>
                     identifier: sommac
-                    <TermOp>
-                        identifier: a
-                    </TermOp>
-                    <TermOp>
-                        identifier: x
-                    </TermOp>
-                    <TermOp>
-                        identifier: b
-                    </TermOp>
-                    <TermOp>
-                        identifier: taglia
-                    </TermOp>
-                    <TermOp>
-                        identifier: risultato
-                    </TermOp>
+                    identifier: a
+                    identifier: x
+                    identifier: b
+                    identifier: taglia
+                    identifier: risultato
                 </CallOp>
                 <CallOp>
                     identifier: stampa
                     <AddOp>
-                        <TermOp>
-                            string_const: "La somma di "
-                        </TermOp>
-                        <TermOp>
-                            identifier: taglia
-                        </TermOp>
+                        string_const: "La somma di "
+                        identifier: taglia
                     </AddOp>
                 </CallOp>
                 <CallOp>
                     identifier: stampa
                     <AddOp>
-                        <TermOp>
-                            string_const: "Ed è pari a "
-                        </TermOp>
-                        <TermOp>
-                            identifier: risultato
-                        </TermOp>
+                        string_const: "Ed è pari a "
+                        identifier: risultato
                     </AddOp>
                 </CallOp>
                 <WriteOp>
-                    <TermOp>
-                        string_const: "Vuoi continuare? (si/no): "
-                    </TermOp>
+                    string_const: "Vuoi continuare? (si/no): "
                 </WriteOp>
                 <ReadOp>
                     identifier: ans
@@ -345,14 +255,10 @@
             </BodyOp>
         </WhileOp>
         <WriteOp>
-            <TermOp>
-                string_const: ""
-            </TermOp>
+            string_const: ""
         </WriteOp>
         <WriteOp>
-            <TermOp>
-                string_const: "Ciao"
-            </TermOp>
+            string_const: "Ciao"
         </WriteOp>
     </BeginEndOp>
 </ProgramOp>

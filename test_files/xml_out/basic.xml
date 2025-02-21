@@ -1,0 +1,34 @@
+<ProgramOp>
+    <DeclsOp>
+        <VarDeclOp>
+            <VarOptInitOp>
+                identifier: x
+            </VarOptInitOp>
+            <VarOptInitOp>
+                identifier: y
+                int_const: 10
+            </VarOptInitOp>
+            int
+        </VarDeclOp>
+    </DeclsOp>
+    <BeginEndOp>
+        <ReadOp>
+            identifier: x
+            identifier: y
+        </ReadOp>
+        <IfThenOp>
+            <GTOp>
+                identifier: x
+                identifier: y
+            </GTOp>
+            <BodyOp>
+                <WriteOp>
+                    string_const: "I valori di x e y sono:"
+                    identifier: x
+                    string_const: " "
+                    identifier: y
+                </WriteOp>
+            </BodyOp>
+        </IfThenOp>
+    </BeginEndOp>
+</ProgramOp>

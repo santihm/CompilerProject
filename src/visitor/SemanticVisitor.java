@@ -359,9 +359,9 @@ public class SemanticVisitor implements ASTVisitor {
             // Añadir la función a la tabla de símbolos
             getCurrentSymbolTable().add(defDeclOp.identifier.name, FromParamsToString(defDeclOp), "func");
         }
-        if (getCurrentSymbolTable().contains(defDeclOp.identifier.name)) {
-            System.err.println("Funcion " + defDeclOp.identifier.name + " puesta en SymbolTable con parametros: " + FromParamsToString(defDeclOp));
-        }
+        //if (getCurrentSymbolTable().contains(defDeclOp.identifier.name)) {
+        //    System.err.println("Funcion " + defDeclOp.identifier.name + " puesta en SymbolTable con parametros: " + FromParamsToString(defDeclOp));
+        //}
         defDeclOp.identifier.accept(this);
 
     }
