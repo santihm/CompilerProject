@@ -3,13 +3,13 @@
 program
 
 // Dichiarazione variabili globali
-c: 1;
+
 a | b | x : double;
 taglia | ans1 | ans : string;
 risultato: double;
 
 // Definizione delle funzioni
-def sommac(a: double; d: double; b: double; ref size: string; ref result: double)
+def sommac(x: double; d: double; b: double; ref size: string; ref result: double)
 {
     result := a + b + c + d;
 
@@ -36,6 +36,7 @@ def stampa(messaggio: string): string
     messaggio !>>;
     return "ok";
 }
+
 
 begin
     a := 1;

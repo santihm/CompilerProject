@@ -47,7 +47,7 @@
             void
             <ParDeclOp>
                 <PVarOp>
-                    identifier: a
+                    identifier: x
                 </PVarOp>
                 double
             </ParDeclOp>
@@ -146,12 +146,6 @@
                 identifier: x
             </VarOptInitOp>
             double
-        </VarDeclOp>
-        <VarDeclOp>
-            <VarOptInitOp>
-                identifier: c
-            </VarOptInitOp>
-            int_const: 1
         </VarDeclOp>
     </DeclsOp>
     <BeginEndOp>

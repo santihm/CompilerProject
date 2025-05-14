@@ -393,7 +393,6 @@ public class SemanticVisitor implements ASTVisitor {
 
     @Override
     public void visit(Identifier identifier) {
-
         // Buscar el identificador en la pila de tablas de símbolos
         SymbolTableEntry entry = findSymbol(identifier.name);
 
@@ -404,7 +403,18 @@ public class SemanticVisitor implements ASTVisitor {
             // Asignar el tipo al nodo
             identifier.type = entry.type;
         }
+
+        /*
+        // Imprimir todas las tablas de símbolos activas para depuración
+        System.out.println("==== Symbol Tables ====");
+        for (SymbolTable table : symbolTableStack) {
+            System.out.println(table);
+        }
+        System.out.println("=======================");
+         */
+
     }
+
 
 
     @Override
@@ -468,9 +478,16 @@ public class SemanticVisitor implements ASTVisitor {
             if (getCurrentSymbolTable().contains(pVarOp.identifier.name)) {
                 System.err.println("Error: Multiple declarations of " + pVarOp.identifier.name);
                 error = true;
-            } else {
-                // Añadir el parámetro a la tabla de símbolos
-                getCurrentSymbolTable().add(pVarOp.identifier.name, parDeclOp.type.type, "var");
+            }
+            else {
+                SymbolTableEntry var = findSymbol(pVarOp.identifier.name);
+                if (var != null) {
+                    //Variable found in father Scope
+                    getCurrentSymbolTable().add(pVarOp.identifier.name, var.type, "var");
+                }
+                else{
+                    getCurrentSymbolTable().add(pVarOp.identifier.name, parDeclOp.type.type, "var");
+                }
             }
         }
         if (parDeclOp.parameters != null) {
@@ -533,14 +550,22 @@ public class SemanticVisitor implements ASTVisitor {
                 error = true;
             } else {
                 // Agregar la variable a la tabla de símbolos con su tipo declarado
-                getCurrentSymbolTable().add(varName, InferConstantType(varDeclOp.type), "var");
+                SymbolTableEntry var = findSymbol(varName);
+                if (var != null) {
+                    varOptInitOp.accept(this);
+                    getCurrentSymbolTable().add(var.name, var.type, "var");
+                }
+                else{
+                    getCurrentSymbolTable().add(varName, InferConstantType(varDeclOp.type), "var");
+                    varOptInitOp.accept(this);
+                }
             }
         }
 
         // Segunda pasada: procesar las inicializaciones
-        for (VarOptInitOp varOptInitOp : varDeclOp.vars) {
-            varOptInitOp.accept(this);
-        }
+        //for (VarOptInitOp varOptInitOp : varDeclOp.vars) {
+        //    varOptInitOp.accept(this);
+        //}
     }
 
 
@@ -612,15 +637,16 @@ public class SemanticVisitor implements ASTVisitor {
 
     @Override
     public void visit(DeclsOp declsOp) {
-        for (ASTNode decl : declsOp.decls) {
+        for (int i = declsOp.decls.size() - 1; i >= 0; i--) {
+            ASTNode decl = declsOp.decls.get(i);
             if (decl instanceof VarDeclOp) {
                 ((VarDeclOp) decl).accept(this);
-            }
-            else if (decl instanceof DefDeclOp) {
+            } else if (decl instanceof DefDeclOp) {
                 ((DefDeclOp) decl).accept(this);
             }
         }
     }
+
 
     @Override
     public void visit(VarDeclsOp varDeclsOp) {

@@ -11,77 +11,79 @@ public class SimpleTesterDebugg {
     public static void main(String[] args) {
         try {
             // Código de entrada
-            String input = "/* Esempio base del linguaggio Toy3 \n" +
+            String input = "// Programma esemplificativo in sintassi Toy3\n" +
                     "\n" +
                     "program\n" +
                     "\n" +
-                    " sommagrande | sommapiccola: double;\n" +
-                    " i:0;\n" +
-                    " x | y | risultato : double;\n" +
-                    " grande | nonusata: bool;\n" +
+                    "// Dichiarazione variabili globali\n" +
+                    "c: 1;\n" +
+                    "a | b | x : double;\n" +
+                    "taglia | ans1 | ans : string;\n" +
+                    "risultato: double;\n" +
                     "\n" +
-                    " def moltiplicazione( x: double; y: double; ref res : double; ref  grande: bool)\n" +
-                    " {\n" +
-                    "\trisultato= x*y | nonusata : double;\n" +
+                    "// Definizione delle funzioni\n" +
+                    "def sommac(x: double; d: double; b: double; ref size: string; ref result: double)\n" +
+                    "{\n" +
+                    "    result := a + b + c + d;\n" +
                     "\n" +
-                    "\tif ((x*y) >= 100) then {\n" +
-                    "\t\tgrande := true;\n" +
-                    "\t}\n" +
-                    "\telse{\n" +
-                    "\t\tgrande := false;\n" +
-                    "\t}\n" +
-                    "\tres := risultato;                   // commento di prova\n" +
-                    " }\n" +
+                    "    if (result > 100) then {\n" +
+                    "        size := \"grande\";\n" +
+                    "    }\n" +
+                    "    else {\n" +
+                    "        if (result > 50) then {\n" +
+                    "            size := \"media\";\n" +
+                    "        }\n" +
+                    "        else {\n" +
+                    "            size := \"piccola\";\n" +
+                    "        }\n" +
+                    "    }\n" +
+                    "}\n" +
                     "\n" +
-                    " def saluto(): string\n" +
-                    " {\n" +
-                    "\treturn \"ciao\";\n" +
-                    " }\n" +
+                    "def stampa(messaggio: string): string\n" +
+                    "{\n" +
+                    "    i: 0;\n" +
+                    "    while (i < 4) do {\n" +
+                    "        \"\" !>>; // Ritorno a capo\n" +
+                    "        i := i + 1;\n" +
+                    "    }\n" +
+                    "    messaggio !>>;\n" +
+                    "    return \"ok\";\n" +
+                    "}\n" +
                     "\n" +
-                    "\n" +
+
                     "begin\n" +
+                    "    a := 1;\n" +
+                    "    b := 2.2;\n" +
+                    "    x := 3;\n" +
+                    "    risultato := 0.0;\n" +
+                    "    ans := \"no\";\n" +
                     "\n" +
-                    "sommagrande | sommapiccola := 0, 0;\n" +
+                    "    sommac(a, x, b, taglia, risultato);\n" +
                     "\n" +
-                    "\"Questo programma permette di svolgere una serie di moltiplicazioni\" !>>;\n" +
-                    "\"sommando i risultati < 100 in sommagrande e quelli < 100 in sommapiccola\" !>>;\n" +
+                    "    stampa(\"La somma di \" + a + \" e \" + b + \" incrementata di \" + c + \" è \" + taglia);\n" +
+                    "    stampa(\"Ed è pari a \" + risultato);\n" +
                     "\n" +
-                    "i := -1;\n" +
-                    "while (i <= 0) do{\n" +
-                    "\tsaluto : \"ciao\";\n" +
-                    "\t\"Quante moltiplicazioni vuoi svolgere? (inserire intero > 0)\">>;\n" +
-                    "\ti <<;\n" +
-                    "\tsaluto !>>;\n" +
-                    "}\n" +
+                    "    \"Vuoi continuare? (si/no) - inserisci due volte la risposta\\n\">>;\n" +
+                    "    ans <<;\n" +
+                    "    ans1 <<;\n" +
                     "\n" +
-                    "while (i > 0) do{\n" +
+                    "    while (ans == \"si\") do {\n" +
+                    "        \"Inserisci un intero: \">>;\n" +
+                    "        a <<;\n" +
+                    "        \"Inserisci un reale: \">>;\n" +
+                    "        b <<;\n" +
                     "\n" +
-                    "\tx := -1;\n" +
-                    "\ty := -1;\n" +
+                    "        sommac(a, x, b, taglia, risultato);\n" +
                     "\n" +
-                    "\twhile (not(x > 0 and y >0)) do\n" +
-                    "\t{\n" +
-                    "\t\tsaluto :\"byebye\";\n" +
-                    "\t\t\"Moltiplicazione \" , i , \": inserisci due numeri positivi\" !>>;\n" +
-                    "\t\tx | y <<;\n" +
-                    "\t\tsaluto !>>;\n" +
-                    "\t}\n" +
+                    "        stampa(\"La somma di \" + a + \" e \" + b + \" incrementata di \" + c + \" è \" + taglia);\n" +
+                    "        stampa(\"Ed è pari a \" + risultato);\n" +
                     "\n" +
-                    "\tmoltiplicazione(x, y , risultato, grande);\n" +
-                    "\trisultato !>>;\n" +
+                    "        \"Vuoi continuare? (si/no): \">>;\n" +
+                    "        ans <<;\n" +
+                    "    }\n" +
                     "\n" +
-                    "\tif(grande) then{\n" +
-                    "\t\t\"il risultato e grande\" !>>;\n" +
-                    "\t\tsommagrande := sommagrande + risultato;\n" +
-                    "\t}else{\n" +
-                    "\t\t\"il risultato e piccolo\" !>>;\n" +
-                    "\t\tsommapiccola := sommapiccola + risultato;\n" +
-                    "\t}\n" +
-                    "\ti := i-1;\n" +
-                    "}\n" +
-                    "\t\"\\n sommagrande e \", sommagrande !>>;\n" +
-                    "\t\"sommapiccola e \", sommapiccola !>>;\n" +
-                    "\n" +
+                    "    \"\" !>>; // Ritorno a capo finale\n" +
+                    "    \"Ciao\" !>>;\n" +
                     "end";
 
             // Crear el lexer
@@ -140,4 +142,5 @@ public class SimpleTesterDebugg {
         }
     }
 }
+
 */
